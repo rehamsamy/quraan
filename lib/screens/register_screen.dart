@@ -314,46 +314,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
               //   ],
               // ),
               // const SizedBox(height: 10,),
-              TextFormField(
-                controller: sallaryController,
-                keyboardType: TextInputType.number,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "الراتب",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
+              // TextFormField(
+              //   controller: sallaryController,
+              //   keyboardType: TextInputType.number,
+              //   cursorColor: AppConstance.mainColor,
+              //   decoration: InputDecoration(
+              //     contentPadding:
+              //     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //     hintText: "الراتب",
+              //     hintStyle: TextStyle(
+              //         color: Colors.grey.withOpacity(0.34),
+              //         fontWeight: FontWeight.w600,
+              //         fontSize: 12),
+              //     border: OutlineInputBorder(
+              //       borderSide: const BorderSide(
+              //         color: Colors.grey,
+              //       ),
+              //       borderRadius: BorderRadius.circular(50),
+              //     ),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: const BorderSide(
+              //         color: Colors.grey,
+              //       ),
+              //       borderRadius: BorderRadius.circular(50),
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderSide: const BorderSide(
+              //         color: Colors.grey,
+              //       ),
+              //       borderRadius: BorderRadius.circular(50),
+              //     ),
+              //   ),
+              //   onFieldSubmitted: (value) {
+              //     //Validator
+              //   },
+              //   // validator: widget.validationFunction,
+              // ),
+              //
+              // const SizedBox(
+              //   height: 30,
+              // ),
 
 
               /// Phone
