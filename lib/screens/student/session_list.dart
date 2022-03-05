@@ -76,7 +76,7 @@ class _SessionListState extends State<SessionList> {
                         ),),
                         SizedBox(height: 5,),
                         Expanded(
-                          child: Text("mohamed.wagdy957@gmail.com",
+                          child: Text("jhonDio@gmail.com",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,

@@ -55,7 +55,7 @@ class _StudentInformationsState extends State<StudentInformations> {
                         ),),
                         SizedBox(height: 5,),
                         Expanded(
-                          child: Text(" محمد وجدي محمد",
+                          child: Text("Basma Salim",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -76,7 +76,7 @@ class _StudentInformationsState extends State<StudentInformations> {
                         ),),
                         SizedBox(height: 5,),
                         Expanded(
-                          child: Text("mohamed.wagdy957@gmail.com",
+                          child: Text("johnDoe@gmail.com",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
@@ -98,7 +98,7 @@ class _StudentInformationsState extends State<StudentInformations> {
                         ),),
                         SizedBox(height: 5,),
                         Expanded(
-                          child: Text(" 01009848788",
+                          child: Text(" 0123456789",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,

@@ -54,16 +54,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       return;
     }
-    if(sallaryController.text.isEmpty) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message:
-          "أدخل الراتب",
-        ),
-      );
-      return;
-    }
+    // if(sallaryController.text.isEmpty) {
+    //   showTopSnackBar(
+    //     context,
+    //     CustomSnackBar.error(
+    //       message:
+    //       "أدخل الراتب",
+    //     ),
+    //   );
+    //   return;
+    // }
     if(phoneController.text.isEmpty) {
       showTopSnackBar(
         context,
@@ -302,18 +302,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 
               /// Sallary
-              Row(
-                children: [
-                  Text(
-                    "الراتب",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10,),
+              // Row(
+              //   children: [
+              //     Text(
+              //       "الراتب",
+              //       style: TextStyle(
+              //           color: Colors.grey,
+              //           fontWeight: FontWeight.w600,
+              //           fontSize: 14),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 10,),
               TextFormField(
                 controller: sallaryController,
                 keyboardType: TextInputType.number,

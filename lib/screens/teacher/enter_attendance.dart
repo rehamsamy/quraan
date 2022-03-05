@@ -68,7 +68,7 @@ class _EnterAttendanceState extends State<EnterAttendance> {
                               ),),
                               SizedBox(height: 5,),
                               Expanded(
-                                child: Text(" محمد وجدي محمد",
+                                child: Text("Azhar Awad",
                                   maxLines: 1,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,

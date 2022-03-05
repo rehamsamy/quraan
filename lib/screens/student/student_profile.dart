@@ -54,7 +54,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           fontSize: 18
                       ),),
                       SizedBox(height: 5,),
-                      Text(" محمد وجدي محمد",
+                      Text("Nora Bakhit",
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -92,7 +92,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           fontSize: 18
                       ),),
                       SizedBox(height: 5,),
-                      Text("mohamed.wagdy957@gmail.com",
+                      Text("johnDoe@gmail.com",
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -131,7 +131,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           fontSize: 18
                       ),),
                       SizedBox(height: 5,),
-                      Text("01009696969",
+                      Text("0123456789",
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,

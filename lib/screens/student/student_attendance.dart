@@ -55,7 +55,7 @@ class _AttendanceState extends State<Attendance> {
                         ),),
                         SizedBox(height: 5,),
                         Expanded(
-                          child: Text("محمد وجدي محمد",
+                          child: Text("Basma Salim",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
