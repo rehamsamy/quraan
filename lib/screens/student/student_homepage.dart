@@ -28,7 +28,7 @@ class _StudentHomepageState extends State<StudentHomepage> {
         leading: Text(""),
         title: Text(
           "لوحة تحكم الطالب",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),

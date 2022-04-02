@@ -93,45 +93,11 @@ class _EditTeacherProfileState extends State<EditTeacherProfile> {
     }
 
     try {
-
-      print("mkemewkmewmekm ${nameController.text}");
-      print("mkemewkmewmekm ${emailController.text}");
-      print("mkemewkmewmekm ${passwordController.text}");
-      print("mkemewkmewmekm ${confirmPasswordController.text}");
-      print("mkemewkmewmekm ${ageController.text}");
-      print("mkemewkmewmekm ${phoneController.text}");
-      print("mkemewkmewmekm ${isMale}");
-      print("mkemewkmewmekm ${isFemale}");
-      var formData;
-
-      passwordController.text.isEmpty ?
-      formData = FormData.fromMap({
-        "name" : nameController.text,
-        "email" : emailController.text,
-        "password" : SharedText.password,
-        "password_confirmation" : SharedText.password,
-        "phone" : phoneController.text,
-        "gender" : isMale ? "male" : "female",
-        "age" : ageController.text,
-      })
-      :
-
-      formData = FormData.fromMap({
-        "name" : nameController.text,
-        "email" : emailController.text,
-        "password" : passwordController.text,
-        "password_confirmation" : confirmPasswordController.text,
-        "phone" : phoneController.text,
-        "gender" : isMale ? "male" : "female",
-        "age" : ageController.text,
-      });
-
-
-      var response = await Dio().put("${AppConstance.api_url}/teacher/${userModel.userData!.id}",
-          data: formData,
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var response = await Dio().put("${AppConstance.api_url}/teacher/${userModel.userData!.id}?name=${nameController.text}&email=${emailController.text}&password=${passwordController.text.isEmpty ? SharedText.password  : passwordController.text}&password_confirmation=${confirmPasswordController.text.isEmpty ? SharedText.password : confirmPasswordController.text}&phone=${phoneController.text}&gender=${ isMale ? "male" : "female"}&age=${ageController.text}",
           options: Options(headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer ${SharedText.userToken}',
+            'Authorization': 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           })
       );
 

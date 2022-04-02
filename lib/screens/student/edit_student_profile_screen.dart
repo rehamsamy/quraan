@@ -22,6 +22,7 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   UserModel userModel = UserModel();
   bool isMale = false;
@@ -70,6 +71,16 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
       );
       return;
     }
+    if(addressController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "أدخل العنوان ",
+        ),
+      );
+      return;
+    }
     if(ageController.text.isEmpty) {
       showTopSnackBar(
         context,
@@ -93,45 +104,11 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
     }
 
     try {
-
-      print("mkemewkmewmekm ${nameController.text}");
-      print("mkemewkmewmekm ${emailController.text}");
-      print("mkemewkmewmekm ${passwordController.text}");
-      print("mkemewkmewmekm ${confirmPasswordController.text}");
-      print("mkemewkmewmekm ${ageController.text}");
-      print("mkemewkmewmekm ${phoneController.text}");
-      print("mkemewkmewmekm ${isMale}");
-      print("mkemewkmewmekm ${isFemale}");
-      var formData;
-
-      passwordController.text.isEmpty ?
-      formData = FormData.fromMap({
-        "name" : nameController.text,
-        "email" : emailController.text,
-        "password" : SharedText.password,
-        "password_confirmation" : SharedText.password,
-        "phone" : phoneController.text,
-        "gender" : isMale ? "male" : "female",
-        "age" : ageController.text,
-      })
-          :
-
-      formData = FormData.fromMap({
-        "name" : nameController.text,
-        "email" : emailController.text,
-        "password" : passwordController.text,
-        "password_confirmation" : confirmPasswordController.text,
-        "phone" : phoneController.text,
-        "gender" : isMale ? "male" : "female",
-        "age" : ageController.text,
-      });
-
-
-      var response = await Dio().put("${AppConstance.api_url}/teacher/${userModel.userData!.id}",
-          data: formData,
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var response = await Dio().put("${AppConstance.api_url}/student/${userModel.userData!.id}?name=${nameController.text}&email=${emailController.text}&password=${passwordController.text.isEmpty ? SharedText.password  : passwordController.text}&password_confirmation=${confirmPasswordController.text.isEmpty ? SharedText.password : confirmPasswordController.text}&phone=${phoneController.text}&address=${addressController.text}&gender=${ isMale ? "male" : "female"}&age=${ageController.text}",
           options: Options(headers: {
             'Accept': 'application/json',
-            'Authorization': 'Bearer ${SharedText.userToken}',
+            'Authorization': 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           })
       );
 
@@ -151,11 +128,12 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
 
     } on DioError catch (exception) {
       /// Get custom massage for the exception
+      print("kmereekriekie ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
             message:
-            exception.response!.data['errors']['email'][0]
+            exception.response!.data['status']
         ),
       );
     }
@@ -174,6 +152,7 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
       nameController.text = userModel.userData!.name!;
       phoneController.text = userModel.userData!.phone!;
       ageController.text = userModel.userData!.age!;
+      addressController.text = userModel.userData!.address!;
       isMale = userModel.userData!.gender == "male" ? true : false;
       isFemale = userModel.userData!.gender == "female" ? true : false;
     });
@@ -500,6 +479,62 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
               ),
 
 
+              /// Address
+              Row(
+                children: [
+                  Text(
+                    "العنوان",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              TextFormField(
+                controller: addressController,
+                keyboardType: TextInputType.text,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "العنوان",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
               /// Age
               Row(
                 children: [
@@ -632,7 +667,7 @@ class _EditStudentProfileState extends State<EditStudentProfile> {
                     _editUser();
                   },
                   child: const Text(
-                    "تسجيل",
+                    "تعديل",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
