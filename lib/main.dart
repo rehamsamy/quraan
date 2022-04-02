@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Quraan',
       theme: ThemeData(
+        brightness: Brightness.dark,
         fontFamily: "Tajawal",
       ),
       locale: const Locale("ar"),

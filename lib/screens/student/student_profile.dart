@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
+import 'package:quraan/models/user_model.dart';
+import 'package:quraan/screens/student/edit_student_profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({Key? key}) : super(key: key);
@@ -9,15 +14,30 @@ class StudentProfile extends StatefulWidget {
 }
 
 class _StudentProfileState extends State<StudentProfile> {
+  UserModel userModel = UserModel();
+
+  getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userModel =  UserModel.fromJson(json.decode(prefs.getString("userModel")!));
+    });
+  }
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppConstance.mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           "الملف الشخصي",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -33,16 +53,9 @@ class _StudentProfileState extends State<StudentProfile> {
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ]
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
                 ),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -51,10 +64,11 @@ class _StudentProfileState extends State<StudentProfile> {
                     children: [
                       Text("الأسم : ",style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18
+                          fontSize: 18,
+                        color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text("Nora Bakhit",
+                      Text(userModel.userData!.name.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -65,22 +79,15 @@ class _StudentProfileState extends State<StudentProfile> {
                 ),
               ),
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               /// Email
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ]
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
                 ),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -89,10 +96,11 @@ class _StudentProfileState extends State<StudentProfile> {
                     children: [
                       Text("البريد الألكتروني : ",style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18
+                          fontSize: 18,
+                        color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text("johnDoe@gmail.com",
+                      Text(userModel.userData!.email.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -103,23 +111,15 @@ class _StudentProfileState extends State<StudentProfile> {
                 ),
               ),
 
-
-              SizedBox(height: 20,),
+              const  SizedBox(height: 20,),
 
               /// Phone Number
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
-                      ),
-                    ]
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
                 ),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -128,10 +128,44 @@ class _StudentProfileState extends State<StudentProfile> {
                     children: [
                       Text("رقم الجوال : ",style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 18
+                          fontSize: 18,
+                        color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text("0123456789",
+                      Text(userModel.userData!.phone.toString(),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,overflow: TextOverflow.ellipsis
+                        ),)
+                    ],
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 20,),
+
+              /// Age
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(" السن : ",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        color: AppConstance.mainColor
+                      ),),
+                      SizedBox(height: 5,),
+                      Text(userModel.userData!.age.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -144,7 +178,80 @@ class _StudentProfileState extends State<StudentProfile> {
 
               SizedBox(height: 20,),
 
+              /// Address
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(" العنوان : ",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        color: AppConstance.mainColor
+                      ),),
+                      SizedBox(height: 5,),
+                      Text(userModel.userData!.address.toString(),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,overflow: TextOverflow.ellipsis
+                        ),)
+                    ],
+                  ),
+                ),
+              ),
 
+              SizedBox(height: 20,),
+
+              /// Gender
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
+                ),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(" النوع : ",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,color: AppConstance.mainColor
+                      ),),
+                      SizedBox(height: 5,),
+                      Text(userModel.userData!.gender.toString(),
+                        maxLines: 1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,overflow: TextOverflow.ellipsis
+                        ),)
+                    ],
+                  ),
+                ),
+              ),
+
+
+              SizedBox(height: 10,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(onPressed: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditStudentProfile()));
+                  }, child: Text("تعديل الملف الشخصي", style: TextStyle(
+                      color: AppConstance.mainColor
+                  ),)),
+                ],
+              )
 
 
             ],

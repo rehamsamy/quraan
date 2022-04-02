@@ -41,6 +41,7 @@ dependencies:
   dio: ^4.0.4
   http: ^0.13.4
   top_snackbar_flutter: ^1.0.2
+  shared_preferences: ^2.0.12
 
 dev_dependencies:
   flutter_test:

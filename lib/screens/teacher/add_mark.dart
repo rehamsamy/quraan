@@ -276,7 +276,7 @@ class _AddMarkState extends State<AddMark> {
              child: const Text(
                "حفظ ",
                style: TextStyle(
-                   color: Color(0XFFFAFAFA),
+                   color: Colors.black,
                    fontSize: 15,
                    fontWeight: FontWeight.w600),
              )),

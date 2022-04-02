@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'package:quraan/screens/student/student_homepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:quraan/models/user_model.dart';
 import 'package:quraan/screens/admin/admin_homepage.dart';
 import 'package:quraan/screens/choose_role.dart';
 import 'package:quraan/screens/teacher/teacher_homepage.dart';
@@ -20,8 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
   var dio = Dio();
+  UserModel userModel = UserModel();
 
   _login() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     if (emailController.text.isEmpty) {
       showTopSnackBar(
         context,
@@ -53,20 +60,65 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => ChooseRole()));
-
     try {
-      setState(() {
-        isLoading = true;
+
+setState(() {
+  isLoading = true;
+});
+
+      var formData = FormData.fromMap({
+        "email" : emailController.text,
+        "password" : passwordController.text,
       });
-      var url = Uri.parse("${AppConstance.api_url}login");
-      var response = await http.post(url, body: {
-              "email" : emailController.text,
-              "password": passwordController.text,
+
+      var response = await Dio().post("${AppConstance.api_url}/login",data: formData);
+
+      if(response.statusCode == 200) {
+
+        userModel = UserModel.fromJson(response.data);
+
+        String userMod = json.encode(userModel);
+        String userToken = json.encode(userModel.accessToken);
+
+        prefs.setString("userModel", userMod);
+        prefs.setString("tokenAccess", userToken);
+        print("password is ${passwordController.text}");
+        prefs.setString("password", passwordController.text);
+
+        showTopSnackBar(
+          context,
+          CustomSnackBar.success(
+            message:
+            "تم تسجيل الدخول بنجاح",
+          ),
+        );
+
+        if(userModel.role == "admin") {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
+        } else if(userModel.role == "student") {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => StudentHomepage()));
+        } else if(userModel.role == "teacher") {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TeacherHomepage()));
+        }
+
+      }
+
+      setState(() {
+        emailController.clear();
+        passwordController.clear();
+        isLoading = false;
       });
 
     } on DioError catch (exception) {
+      /// Get custom massage for the exception
+     print("feererer ${exception.response}");
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+            message:
+            exception.response!.data['error']
+        ),
+      );
       setState(() {
         isLoading = false;
       });
@@ -76,23 +128,33 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppConstance.mainColor,
-        elevation: 0,
-        title: Text(
-          "تسجيل الدخول",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-        ),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: AppConstance.mainColor,
+      //   elevation: 0,
+      //   title: Text(
+      //     "تسجيل الدخول",
+      //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+      //   ),
+      //   centerTitle: true,
+      // ),
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Center(
-          child: ListView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
                 height: 20,
+              ),
+
+                Text(
+                  "تسجيل الدخول",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+                ),
+
+              const SizedBox(
+                height: 50,
               ),
 
               /// Email
@@ -101,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "البريد الألكتروني",
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: AppConstance.mainColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                   ),
@@ -157,7 +219,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "كلمة المرور",
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: AppConstance.mainColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                   ),
@@ -229,10 +291,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: const Text(
                     "تسجيل الدخول",
                     style: TextStyle(
-                        color: Color(0XFFFAFAFA),
+                        color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.w600),
                   )),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              TextButton(onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChooseRole()));
+
+              }, child: Text("تسجيل حساب جديد",style: TextStyle(
+                color: AppConstance.mainColor
+              ),))
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppConstance {
-  static String api_url = "http://192.168.1.18:8000/api/";
-  static Color mainColor = Color(0XFFc0392b);
+  static String api_url = "https://quran.supermsoft.com/api";
+  static Color mainColor = Color(0XFFd5be9c);
 }

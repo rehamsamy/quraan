@@ -3,15 +3,16 @@ import 'package:quraan/constants.dart';
 import 'package:quraan/screens/login_screen.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:dio/dio.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+class StudentRegisterScreen extends StatefulWidget {
+  const StudentRegisterScreen({Key? key}) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  _StudentRegisterScreenState createState() => _StudentRegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -20,20 +21,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController sallaryController = TextEditingController();
   TextEditingController ageController = TextEditingController();
-  String? gender;
+  bool isMale = false;
+  bool isFemale = false;
 
 
-  _register(){
-    if(emailController.text.isEmpty) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message:
-          "أدخل البريد الألكتروني",
-        ),
-      );
-      return;
-    }
+  _register() async {
     if(nameController.text.isEmpty) {
       showTopSnackBar(
         context,
@@ -44,42 +36,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       return;
     }
-    if(ageController.text.isEmpty) {
+    if(emailController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
           message:
-          "أدخل السن ",
-        ),
-      );
-      return;
-    }
-    // if(sallaryController.text.isEmpty) {
-    //   showTopSnackBar(
-    //     context,
-    //     CustomSnackBar.error(
-    //       message:
-    //       "أدخل الراتب",
-    //     ),
-    //   );
-    //   return;
-    // }
-    if(phoneController.text.isEmpty) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message:
-          "أدخل رقم الجوال",
-        ),
-      );
-      return;
-    }
-    if(phoneController.text.isEmpty) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message:
-          "أدخل رقم الجوال",
+          "أدخل البريد الألكتروني",
         ),
       );
       return;
@@ -94,6 +56,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       return;
     }
+    if (passwordController.text.length < 6) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "كلمة المرور يجب أن تكون أكبر من 6 حروف أو أرقام",
+        ),
+      );
+      return;
+    }
     if(confirmPasswordController.text.isEmpty) {
       showTopSnackBar(
         context,
@@ -104,9 +76,113 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
       return;
     }
+    if(passwordController.text != confirmPasswordController.text) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "كلمة المرور وتأكيد كلمة المرور غير متطابقان",
+        ),
+      );
+      return;
+    }
+    if(phoneController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "أدخل رقم الجوال",
+        ),
+      );
+      return;
+    }
+    if(addressController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "أدخل العنوان ",
+        ),
+      );
+      return;
+    }
+    if(ageController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "أدخل السن ",
+        ),
+      );
+      return;
+    }
 
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    if(isMale == false && isFemale == false) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          "أدخل الجنس ",
+        ),
+      );
+      return;
+    }
+
+
+    try {
+
+      var formData = FormData.fromMap({
+        "name" : nameController.text,
+        "email" : emailController.text,
+        "password" : passwordController.text,
+        "password_confirmation" : confirmPasswordController.text,
+        "phone" : phoneController.text,
+        "address" : addressController.text,
+        "gender" : isMale ? "male" : "female",
+        "age" : ageController.text,
+      });
+
+      var response = await Dio().post("${AppConstance.api_url}/student/register",data: formData);
+
+      print("response is ${response.statusCode}");
+      print("response is ${response.data}");
+
+      if(response.statusCode == 200) {
+        showTopSnackBar(
+          context,
+          CustomSnackBar.success(
+            message:
+            "تم التسجيل بنجاح",
+          ),
+        );
+      }
+
+      setState(() {
+        nameController.clear();
+        emailController.clear();
+        passwordController.clear();
+        confirmPasswordController.clear();
+        phoneController.clear();
+        addressController.clear();
+        ageController.clear();
+        isMale = false;
+        isFemale = false;
+      });
+
+    } on DioError catch (exception) {
+      /// Get custom massage for the exception
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message:
+          exception.response!.data['errors']['email'][0]
+        ),
+      );
+    }
+
+
+    // Navigator.of(context).push(
+    //     MaterialPageRoute(builder: (context) => LoginScreen()));
 
   }
 
@@ -114,11 +190,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppConstance.mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "تسجيل حساب جديد",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          "تسجيل طالب جديد",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -132,61 +208,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 20,
               ),
 
-              /// Email
-              Row(
-                children: [
-                  Text(
-                    "البريد الألكتروني",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10,),
-              TextFormField(
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "البريد الألكتروني",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-
 
               /// Name
               Row(
@@ -194,7 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Text(
                     " الأسم",
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: AppConstance.mainColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                   ),
@@ -244,13 +265,309 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
 
+              /// Email
+              Row(
+                children: [
+                  Text(
+                    "البريد الألكتروني",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              TextFormField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "البريد الألكتروني",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
+              /// Password
+              Row(
+                children: [
+                  Text(
+                    "كلمة المرور",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                obscureText: true,
+                controller: passwordController,
+                keyboardType: TextInputType.text,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "كلمة المرور",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
+
+
+              /// Confirm Password
+              Row(
+                children: [
+                  Text(
+                    "تأكيد كلمة المرور",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                obscureText: true,
+                controller: confirmPasswordController,
+                keyboardType: TextInputType.text,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "تأكيد كلمة المرور",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
+
+              /// Phone
+              Row(
+                children: [
+                  Text(
+                    "رقم الجوال",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              TextFormField(
+                controller: phoneController,
+                keyboardType: TextInputType.number,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "رقم الجوال",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
+
+
+
+              /// Address
+              Row(
+                children: [
+                  Text(
+                    "العنوان",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10,),
+              TextFormField(
+                controller: addressController,
+                keyboardType: TextInputType.text,
+                cursorColor: AppConstance.mainColor,
+                decoration: InputDecoration(
+                  contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  hintText: "العنوان",
+                  hintStyle: TextStyle(
+                      color: Colors.grey.withOpacity(0.34),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+                onFieldSubmitted: (value) {
+                  //Validator
+                },
+                // validator: widget.validationFunction,
+              ),
+
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
               /// Age
               Row(
                 children: [
                   Text(
                     "السن",
                     style: TextStyle(
-                        color: Colors.grey,
+                        color: AppConstance.mainColor,
                         fontWeight: FontWeight.w600,
                         fontSize: 14),
                   ),
@@ -300,229 +617,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
 
 
-
-              /// Sallary
-              // Row(
-              //   children: [
-              //     Text(
-              //       "الراتب",
-              //       style: TextStyle(
-              //           color: Colors.grey,
-              //           fontWeight: FontWeight.w600,
-              //           fontSize: 14),
-              //     ),
-              //   ],
-              // ),
-              // const SizedBox(height: 10,),
-              // TextFormField(
-              //   controller: sallaryController,
-              //   keyboardType: TextInputType.number,
-              //   cursorColor: AppConstance.mainColor,
-              //   decoration: InputDecoration(
-              //     contentPadding:
-              //     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //     hintText: "الراتب",
-              //     hintStyle: TextStyle(
-              //         color: Colors.grey.withOpacity(0.34),
-              //         fontWeight: FontWeight.w600,
-              //         fontSize: 12),
-              //     border: OutlineInputBorder(
-              //       borderSide: const BorderSide(
-              //         color: Colors.grey,
-              //       ),
-              //       borderRadius: BorderRadius.circular(50),
-              //     ),
-              //     focusedBorder: OutlineInputBorder(
-              //       borderSide: const BorderSide(
-              //         color: Colors.grey,
-              //       ),
-              //       borderRadius: BorderRadius.circular(50),
-              //     ),
-              //     enabledBorder: OutlineInputBorder(
-              //       borderSide: const BorderSide(
-              //         color: Colors.grey,
-              //       ),
-              //       borderRadius: BorderRadius.circular(50),
-              //     ),
-              //   ),
-              //   onFieldSubmitted: (value) {
-              //     //Validator
-              //   },
-              //   // validator: widget.validationFunction,
-              // ),
-              //
-              // const SizedBox(
-              //   height: 30,
-              // ),
-
-
-              /// Phone
-              Row(
-                children: [
-                  Text(
-                    "رقم الجوال",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10,),
-              TextFormField(
-                controller: phoneController,
-                keyboardType: TextInputType.number,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "رقم الجوال",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
+            Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Text(
+                        "ذكر",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14),
+                      ),
+                      Checkbox(
+                        activeColor: AppConstance.mainColor,
+                        value: isMale,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isFemale = false;
+                            isMale = true;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Text(
+                        "أنثي",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14),
+                      ),
+                      Checkbox(
+                        activeColor: AppConstance.mainColor,
+                        value: isFemale,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isFemale = true;
+                            isMale = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
 
               const SizedBox(
                 height: 30,
-              ),
-
-              /// Password
-              Row(
-                children: [
-                  Text(
-                    "كلمة المرور",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                obscureText: true,
-                controller: passwordController,
-                keyboardType: TextInputType.text,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "كلمة المرور",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              /// Confirm Password
-              Row(
-                children: [
-                  Text(
-                    "تأكيد كلمة المرور",
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                obscureText: true,
-                controller: confirmPasswordController,
-                keyboardType: TextInputType.text,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "تأكيد كلمة المرور",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-
-              const SizedBox(
-                height: 50,
               ),
               ElevatedButton(
                   style: ButtonStyle(
@@ -545,7 +693,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: const Text(
                     "تسجيل",
                     style: TextStyle(
-                        color: Color(0XFFFAFAFA),
+                        color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.w600),
                   )),
