@@ -26,7 +26,10 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
         leading: Text(""),
         title: Text(
           "لوحة تحكم المدرس",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -37,8 +40,9 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
 
               /// Profile
               Container(
@@ -47,10 +51,11 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize:
-                      MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -60,11 +65,11 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                         ),
                       ),
                       backgroundColor:
-                      MaterialStateProperty.all(AppConstance.mainColor),
+                          MaterialStateProperty.all(AppConstance.mainColor),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => TeacherProfile()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TeacherProfile()));
                     },
                     child: const Text(
                       "الملف الشخصي",
@@ -78,7 +83,6 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
               const SizedBox(
                 height: 30,
               ),
-
 
               // /// Student
               // Container(
@@ -232,10 +236,11 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize:
-                      MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -245,12 +250,14 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                         ),
                       ),
                       backgroundColor:
-                      MaterialStateProperty.all(AppConstance.mainColor),
+                          MaterialStateProperty.all(AppConstance.mainColor),
                     ),
                     onPressed: () async {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       prefs.clear();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
                     },
                     child: const Text(
                       " تسجيل الخروج",

@@ -39,8 +39,7 @@ class _StudentMarksState extends State<StudentMarks> {
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
                     ),
-                  ]
-              ),
+                  ]),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -49,65 +48,78 @@ class _StudentMarksState extends State<StudentMarks> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("الدرجة : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "الدرجة : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text("50",
+                          child: Text(
+                            "50",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-
-
-                    SizedBox(height: 10,),
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("رقم الجزء : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "رقم الجزء : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text(" 12",
+                          child: Text(
+                            " 12",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-
-                    SizedBox(height: 10,),
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("أسم السورة : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "أسم السورة : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text("النساء",
+                          child: Text(
+                            "النساء",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-
                   ],
                 ),
               ),

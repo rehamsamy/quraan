@@ -39,8 +39,7 @@ class _StudentInformationsState extends State<StudentInformations> {
                       blurRadius: 7,
                       offset: Offset(0, 3), // changes position of shadow
                     ),
-                  ]
-              ),
+                  ]),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -49,65 +48,78 @@ class _StudentInformationsState extends State<StudentInformations> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("أسم الطالب : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "أسم الطالب : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text("Basma Salim",
+                          child: Text(
+                            "Basma Salim",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-                    SizedBox(height: 10,),
-
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("البريد الألكتروني : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "البريد الألكتروني : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text("johnDoe@gmail.com",
+                          child: Text(
+                            "johnDoe@gmail.com",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-
-
-                    SizedBox(height: 10,),
-
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("رقم الجوال : ",style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18
-                        ),),
-                        SizedBox(height: 5,),
+                        Text(
+                          "رقم الجوال : ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Expanded(
-                          child: Text(" 0123456789",
+                          child: Text(
+                            " 0123456789",
                             maxLines: 1,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,overflow: TextOverflow.ellipsis
-                            ),),
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
                         )
                       ],
                     ),
-
                   ],
                 ),
               ),

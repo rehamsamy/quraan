@@ -21,24 +21,29 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-
-
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if(prefs.getString("userModel") != null) {
+    if (prefs.getString("userModel") != null) {
       SharedText.userObj = prefs.getString("userModel")!;
       SharedText.userToken = prefs.getString("tokenAccess")!;
       SharedText.password = prefs.getString("password")!;
-      print("print user role ${json.decode(prefs.getString("userModel")!)['role']}");
-      if(json.decode(prefs.getString("userModel")!)['role'] == "admin") {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminHomePage()));
-      } else if(json.decode(prefs.getString("userModel")!)['role'] == "student") {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const StudentHomepage()));
-      } else if(json.decode(prefs.getString("userModel")!)['role'] == "teacher") {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TeacherHomepage()));
+      print(
+          "print user role ${json.decode(prefs.getString("userModel")!)['role']}");
+      if (json.decode(prefs.getString("userModel")!)['role'] == "admin") {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const AdminHomePage()));
+      } else if (json.decode(prefs.getString("userModel")!)['role'] ==
+          "student") {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const StudentHomepage()));
+      } else if (json.decode(prefs.getString("userModel")!)['role'] ==
+          "teacher") {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const TeacherHomepage()));
       }
     } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const LoginScreen()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     }
   }
 
@@ -58,9 +63,12 @@ class _IntroScreenState extends State<IntroScreen> {
         children: [
           Text(
             " القرأن الكريم",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+                color: AppConstance.mainColor),
           ),
-         const SizedBox(
+          const SizedBox(
             height: 40,
           ),
           Container(

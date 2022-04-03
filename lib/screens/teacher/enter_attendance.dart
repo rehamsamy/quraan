@@ -11,6 +11,7 @@ class EnterAttendance extends StatefulWidget {
 
 class _EnterAttendanceState extends State<EnterAttendance> {
   bool _value = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +31,11 @@ class _EnterAttendanceState extends State<EnterAttendance> {
           children: [
             Container(
               padding: EdgeInsets.symmetric(vertical: 20),
-                child: Text("اليوم : ${DateFormat('EEEE').format(DateTime.now())}",style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600
-                ),),),
+              child: Text(
+                "اليوم : ${DateFormat('EEEE').format(DateTime.now())}",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+            ),
             Expanded(
               child: ListView.builder(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -53,8 +55,7 @@ class _EnterAttendanceState extends State<EnterAttendance> {
                             blurRadius: 7,
                             offset: Offset(0, 3), // changes position of shadow
                           ),
-                        ]
-                    ),
+                        ]),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       child: Column(
@@ -62,18 +63,23 @@ class _EnterAttendanceState extends State<EnterAttendance> {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("أسم الطالب : ",style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18
-                              ),),
-                              SizedBox(height: 5,),
+                              Text(
+                                "أسم الطالب : ",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Expanded(
-                                child: Text("Azhar Awad",
+                                child: Text(
+                                  "Azhar Awad",
                                   maxLines: 1,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 16,overflow: TextOverflow.ellipsis
-                                  ),),
+                                      fontSize: 16,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
                               )
                             ],
                           ),

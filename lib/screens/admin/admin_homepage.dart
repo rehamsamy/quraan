@@ -24,7 +24,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
         leading: Text(""),
         title: Text(
           "لوحة تحكم المدير المسئول",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -68,12 +71,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   child: const Text(
                     "الملف الشخصي",
                     style: TextStyle(
-                        color:  Colors.black,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600),
                   )),
             ),
-
 
             const SizedBox(
               height: 30,
@@ -109,7 +111,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   child: const Text(
                     "إدارة الطلاب",
                     style: TextStyle(
-                        color:  Colors.black,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600),
                   )),
@@ -140,7 +142,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       ),
                     ),
                     backgroundColor:
-                    MaterialStateProperty.all(AppConstance.mainColor),
+                        MaterialStateProperty.all(AppConstance.mainColor),
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -149,7 +151,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                   child: const Text(
                     "إدارة المدرسين",
                     style: TextStyle(
-                        color:  Colors.black,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600),
                   )),
@@ -296,9 +298,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                         MaterialStateProperty.all(AppConstance.mainColor),
                   ),
                   onPressed: () async {
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
                     prefs.clear();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   child: const Text(
                     " تسجيل الخروج",

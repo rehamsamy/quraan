@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:quraan/screens/student/student_homepage.dart';
+import 'package:quraan/sharedText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
@@ -33,8 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل البريد الألكتروني",
+          message: "أدخل البريد الألكتروني",
         ),
       );
       return;
@@ -43,8 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل كلمة المرور",
+          message: "أدخل كلمة المرور",
         ),
       );
       return;
@@ -53,28 +52,26 @@ class _LoginScreenState extends State<LoginScreen> {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "كلمة المرور يجب أن تكون أكبر من 6 حروف أو أرقام",
+          message: "كلمة المرور يجب أن تكون أكبر من 6 حروف أو أرقام",
         ),
       );
       return;
     }
 
     try {
-
-setState(() {
-  isLoading = true;
-});
-
-      var formData = FormData.fromMap({
-        "email" : emailController.text,
-        "password" : passwordController.text,
+      setState(() {
+        isLoading = true;
       });
 
-      var response = await Dio().post("${AppConstance.api_url}/login",data: formData);
+      var formData = FormData.fromMap({
+        "email": emailController.text,
+        "password": passwordController.text,
+      });
 
-      if(response.statusCode == 200) {
+      var response =
+          await Dio().post("${AppConstance.api_url}/login", data: formData);
 
+      if (response.statusCode == 200) {
         userModel = UserModel.fromJson(response.data);
 
         String userMod = json.encode(userModel);
@@ -84,23 +81,24 @@ setState(() {
         prefs.setString("tokenAccess", userToken);
         print("password is ${passwordController.text}");
         prefs.setString("password", passwordController.text);
-
+        SharedText.password = prefs.getString("password")!;
         showTopSnackBar(
           context,
           CustomSnackBar.success(
-            message:
-            "تم تسجيل الدخول بنجاح",
+            message: "تم تسجيل الدخول بنجاح",
           ),
         );
 
-        if(userModel.role == "admin") {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminHomePage()));
-        } else if(userModel.role == "student") {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => StudentHomepage()));
-        } else if(userModel.role == "teacher") {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TeacherHomepage()));
+        if (userModel.role == "admin") {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => AdminHomePage()));
+        } else if (userModel.role == "student") {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => StudentHomepage()));
+        } else if (userModel.role == "teacher") {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const TeacherHomepage()));
         }
-
       }
 
       setState(() {
@@ -108,16 +106,12 @@ setState(() {
         passwordController.clear();
         isLoading = false;
       });
-
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-     print("feererer ${exception.response}");
+      print("feererer ${exception.response}");
       showTopSnackBar(
         context,
-        CustomSnackBar.error(
-            message:
-            exception.response!.data['error']
-        ),
+        CustomSnackBar.error(message: exception.response!.data['error']),
       );
       setState(() {
         isLoading = false;
@@ -138,20 +132,24 @@ setState(() {
       //   centerTitle: true,
       // ),
       body: Container(
+        height: MediaQuery.of(context).size.height,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(
                 height: 20,
               ),
 
-                Text(
-                  "تسجيل الدخول",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
-                ),
+              Text(
+                "تسجيل الدخول",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: AppConstance.mainColor),
+              ),
 
               const SizedBox(
                 height: 50,
@@ -300,12 +298,15 @@ setState(() {
                 height: 10,
               ),
 
-              TextButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ChooseRole()));
-
-              }, child: Text("تسجيل حساب جديد",style: TextStyle(
-                color: AppConstance.mainColor
-              ),))
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ChooseRole()));
+                  },
+                  child: Text(
+                    "تسجيل حساب جديد",
+                    style: TextStyle(color: AppConstance.mainColor),
+                  ))
             ],
           ),
         ),

@@ -26,44 +26,60 @@ class _ChooseRoleState extends State<ChooseRole> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
-             Text(
+            Text(
               "من فضلك",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: AppConstance.mainColor),
             ),
 
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
 
-             Text(
+            Text(
               "أختر بمن تريد التسجيل",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                  color: AppConstance.mainColor),
             ),
 
-
-            const SizedBox(height: 60,),
-
+            const SizedBox(
+              height: 60,
+            ),
 
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20,),
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
               child: Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentRegisterScreen()));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => StudentRegisterScreen()));
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-
-                        ),
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(
+                                color: AppConstance.mainColor.withOpacity(.4),
+                                width: 1)),
                         child: Column(
                           children: [
-                            Icon(Icons.person_add,size: 40,color: AppConstance.mainColor,),
-                            SizedBox(height: 15,),
+                            Icon(
+                              Icons.person_add,
+                              size: 40,
+                              color: AppConstance.mainColor,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
                             Text(
                               "طالب",
                               style: TextStyle(
@@ -76,23 +92,33 @@ class _ChooseRoleState extends State<ChooseRole> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 50,),
+                  SizedBox(
+                    width: 50,
+                  ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeacherRegisterScreen()));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => TeacherRegisterScreen()));
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-                        ),
+                            border: Border.all(
+                                color: AppConstance.mainColor.withOpacity(.4),
+                                width: 1)),
                         child: Column(
                           children: [
-                            Icon(Icons.person_add,size: 40,color: AppConstance.mainColor,),
-                            SizedBox(height: 15,),
+                            Icon(
+                              Icons.person_add,
+                              size: 40,
+                              color: AppConstance.mainColor,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
                             Text(
                               "مدرس",
                               style: TextStyle(
@@ -108,7 +134,6 @@ class _ChooseRoleState extends State<ChooseRole> {
                 ],
               ),
             ),
-
 
             // /// Student
             // ElevatedButton(
@@ -141,7 +166,6 @@ class _ChooseRoleState extends State<ChooseRole> {
             // const SizedBox(
             //   height: 30,
             // ),
-
 
             // /// Teacher
             // ElevatedButton(

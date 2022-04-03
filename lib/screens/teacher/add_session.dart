@@ -24,14 +24,13 @@ class _AddSessionState extends State<AddSession> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             TextFormField(
               // controller: emailController,
               keyboardType: TextInputType.emailAddress,
               cursorColor: AppConstance.mainColor,
               decoration: InputDecoration(
                 contentPadding:
-                EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                    EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 hintText: "البريد الألكتروني",
                 hintStyle: TextStyle(
                     color: Colors.grey.withOpacity(0.34),

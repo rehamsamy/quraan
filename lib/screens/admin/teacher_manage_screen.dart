@@ -31,10 +31,11 @@ class _TeacherManagementState extends State<TeacherManagement> {
     try {
       var response = await Dio().get("${AppConstance.api_url}/teacher/all",
           options: Options(headers: {
-            'Authorization': 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+            'Authorization':
+                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         setState(() {
           teacherList = (response.data['data'] as List)
               .map((e) => TeacherModel.fromJson(e))
@@ -44,9 +45,8 @@ class _TeacherManagementState extends State<TeacherManagement> {
         print("list of student are ${teacherList.length}");
         print("list of student are ${teacherList}");
       }
-    }on DioError catch (exception) {
+    } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("feererer ${exception.response!.data}");
       setState(() {
         isLoading = false;
       });
@@ -58,14 +58,14 @@ class _TeacherManagementState extends State<TeacherManagement> {
     try {
       var response = await Dio().delete("${AppConstance.api_url}/teacher/${id}",
           options: Options(headers: {
-            'Authorization': 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+            'Authorization':
+                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         showTopSnackBar(
           context,
           CustomSnackBar.success(
-            message:
-            "تم الحذف بنجاح",
+            message: "تم الحذف بنجاح",
           ),
         );
         getAllTeachers();
@@ -81,7 +81,6 @@ class _TeacherManagementState extends State<TeacherManagement> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,128 +89,164 @@ class _TeacherManagementState extends State<TeacherManagement> {
         elevation: 0,
         title: Text(
           "إدارة المدرسين",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
-      body:
-      isLoading ? Center(child:   Container(
-        height: 50,
-        child: SpinKitSquareCircle(
-          color: AppConstance.mainColor,
-          size: 50.0,
-        ),
-      ),) :
-      teacherList.length == 0 ? Center(child: Text("لا يوجد بيانات"),) :
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        child: ListView.builder(
-          itemCount: teacherList.length,
-          itemBuilder: (context, index) {
-            return Expanded(
+      body: isLoading
+          ? Center(
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                margin: EdgeInsets.only(bottom: 15),
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-
-                    /// Name
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("الأسم : ",style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppConstance.mainColor
-                        ),),
-                        Expanded(child: Text(teacherList[index].name.toString(),softWrap: true,maxLines: 1,overflow: TextOverflow.ellipsis,))
-                      ],
-                    ),
-
-
-                    SizedBox(height: 5,),
-
-
-                    /// Email
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("البريد الألكتروني : ",style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppConstance.mainColor
-                        ),),
-                        Expanded(child: Text(teacherList[index].email.toString(),softWrap: true,maxLines: 1,overflow: TextOverflow.ellipsis,))
-                      ],
-                    ),
-
-
-
-                    SizedBox(height: 5,),
-
-
-                    /// Phone
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("رقم الجوال : ",style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppConstance.mainColor
-                        ),),
-                        Expanded(child: Text(teacherList[index].phone.toString(),softWrap: true,maxLines: 1,overflow: TextOverflow.ellipsis,))
-                      ],
-                    ),
-
-
-                    SizedBox(height: 5,),
-
-
-
-
-                    /// Age
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("السن : ",style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppConstance.mainColor
-                        ),),
-                        Expanded(child: Text(teacherList[index].age.toString(),softWrap: true,maxLines: 1,overflow: TextOverflow.ellipsis,))
-                      ],
-                    ),
-
-
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                            onPressed: (){
-                              setState(() {
-                                removeTeacher(teacherList[index].id);
-                              });
-                            }, child: Text("حذف",style: TextStyle(
-                            color: Colors.red
-                        ),)),
-                      ],
-                    )
-
-                  ],
+                height: 50,
+                child: SpinKitSquareCircle(
+                  color: AppConstance.mainColor,
+                  size: 50.0,
                 ),
               ),
-            );
-          },
-        ),
-      ),
+            )
+          : teacherList.length == 0
+              ? Center(
+                  child: Text("لا يوجد بيانات"),
+                )
+              : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: ListView.builder(
+                    itemCount: teacherList.length,
+                    itemBuilder: (context, index) {
+                      return Expanded(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 15),
+                          margin: EdgeInsets.only(bottom: 15),
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                  color: AppConstance.mainColor.withOpacity(.4),
+                                  width: 1)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              /// Name
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "الأسم : ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: AppConstance.mainColor),
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    teacherList[index].name.toString(),
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: 5,
+                              ),
+
+                              /// Email
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "البريد الألكتروني : ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: AppConstance.mainColor),
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    teacherList[index].email.toString(),
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: 5,
+                              ),
+
+                              /// Phone
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "رقم الجوال : ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: AppConstance.mainColor),
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    teacherList[index].phone.toString(),
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))
+                                ],
+                              ),
+
+                              SizedBox(
+                                height: 5,
+                              ),
+
+                              /// Age
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "السن : ",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16,
+                                        color: AppConstance.mainColor),
+                                  ),
+                                  Expanded(
+                                      child: Text(
+                                    teacherList[index].age.toString(),
+                                    softWrap: true,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))
+                                ],
+                              ),
+
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          removeTeacher(teacherList[index].id);
+                                        });
+                                      },
+                                      child: Text(
+                                        "حذف",
+                                        style: TextStyle(color: Colors.red),
+                                      )),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
     );
   }
 }

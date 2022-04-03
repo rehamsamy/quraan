@@ -18,7 +18,8 @@ class _AdminProfileState extends State<AdminProfile> {
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userModel =  UserModel.fromJson(json.decode(prefs.getString("userModel")!));
+      userModel =
+          UserModel.fromJson(json.decode(prefs.getString("userModel")!));
     });
   }
 
@@ -28,7 +29,6 @@ class _AdminProfileState extends State<AdminProfile> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,10 @@ class _AdminProfileState extends State<AdminProfile> {
         elevation: 0,
         title: Text(
           "الملف الشخصي",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -46,8 +49,9 @@ class _AdminProfileState extends State<AdminProfile> {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
 
               /// Name
               Container(
@@ -55,31 +59,40 @@ class _AdminProfileState extends State<AdminProfile> {
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-                ),
+                    border: Border.all(
+                        color: AppConstance.mainColor.withOpacity(.4),
+                        width: 1)),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("الأسم : ",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        color: AppConstance.mainColor
-                      ),),
-                      SizedBox(height: 5,),
-                      Text(userModel.userData!.name.toString(),
+                      Text(
+                        "الأسم : ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: AppConstance.mainColor),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        userModel.userData!.name.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16,overflow: TextOverflow.ellipsis
-                        ),)
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis),
+                      )
                     ],
                   ),
                 ),
               ),
 
-             const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
 
               /// Email
               Container(
@@ -87,32 +100,41 @@ class _AdminProfileState extends State<AdminProfile> {
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-
-                ),
+                    border: Border.all(
+                        color: AppConstance.mainColor.withOpacity(.4),
+                        width: 1)),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("البريد الألكتروني : ",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: AppConstance.mainColor
-                      ),),
-                      SizedBox(height: 5,),
-                      Text(userModel.userData!.email.toString(),
+                      Text(
+                        "البريد الألكتروني : ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: AppConstance.mainColor),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        userModel.userData!.email.toString(),
                         maxLines: 1,
                         style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,overflow: TextOverflow.ellipsis,
-                        ),)
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
 
-              const  SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
 
               /// Phone Number
               Container(
@@ -120,37 +142,40 @@ class _AdminProfileState extends State<AdminProfile> {
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: AppConstance.mainColor.withOpacity(.4),width: 1)
-
-                ),
+                    border: Border.all(
+                        color: AppConstance.mainColor.withOpacity(.4),
+                        width: 1)),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("رقم الجوال : ",style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: AppConstance.mainColor
-                      ),),
-                      SizedBox(height: 5,),
-                      Text(userModel.userData!.phone.toString(),
+                      Text(
+                        "رقم الجوال : ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: AppConstance.mainColor),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        userModel.userData!.phone.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16,overflow: TextOverflow.ellipsis
-                        ),)
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis),
+                      )
                     ],
                   ),
                 ),
               ),
 
-
-              SizedBox(height: 20,),
-
-
-
-
+              SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ),

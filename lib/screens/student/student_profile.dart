@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
+import 'package:quraan/models/single_user_data_model.dart';
 import 'package:quraan/models/user_model.dart';
 import 'package:quraan/screens/student/edit_student_profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,11 +18,40 @@ class StudentProfile extends StatefulWidget {
 
 class _StudentProfileState extends State<StudentProfile> {
   UserModel userModel = UserModel();
+  SingleUserDataModel singleUserDataModel = SingleUserDataModel();
+  bool isLoading = false;
+
+  getUserDataFromUrl(id) async {
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      var response = await Dio().get("${AppConstance.api_url}/student/${id}",
+          options: Options(headers: {
+            'Authorization': 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+          }));
+
+      if(response.statusCode == 200) {
+        setState(() {
+          singleUserDataModel = SingleUserDataModel.fromJson(response.data['data']);
+          isLoading = false;
+        });
+      }
+    }on DioError catch (exception) {
+      /// Get custom massage for the exception
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       userModel =  UserModel.fromJson(json.decode(prefs.getString("userModel")!));
+      print("userModelData ${userModel.userData!.id}");
+      getUserDataFromUrl(userModel.userData!.id);
     });
   }
   @override
@@ -41,7 +73,16 @@ class _StudentProfileState extends State<StudentProfile> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body:
+
+      isLoading ? Center(child:   Container(
+        height: 50,
+        child: SpinKitSquareCircle(
+          color: AppConstance.mainColor,
+          size: 50.0,
+        ),
+      ),)  :
+      SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -68,7 +109,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.name.toString(),
+                      Text(singleUserDataModel.name.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -100,7 +141,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.email.toString(),
+                      Text(singleUserDataModel.email.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -132,7 +173,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.phone.toString(),
+                      Text(singleUserDataModel.phone.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -165,7 +206,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.age.toString(),
+                      Text(singleUserDataModel.age.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -197,7 +238,7 @@ class _StudentProfileState extends State<StudentProfile> {
                         color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.address.toString(),
+                      Text(singleUserDataModel.address.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -228,7 +269,7 @@ class _StudentProfileState extends State<StudentProfile> {
                           fontSize: 18,color: AppConstance.mainColor
                       ),),
                       SizedBox(height: 5,),
-                      Text(userModel.userData!.gender.toString(),
+                      Text(singleUserDataModel.gender.toString(),
                         maxLines: 1,
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -246,7 +287,7 @@ class _StudentProfileState extends State<StudentProfile> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const EditStudentProfile()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditStudentProfile(studentID: singleUserDataModel.id!,)));
                   }, child: Text("تعديل الملف الشخصي", style: TextStyle(
                       color: AppConstance.mainColor
                   ),)),

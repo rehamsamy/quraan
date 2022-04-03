@@ -22,34 +22,30 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
   bool isMale = false;
   bool isFemale = false;
 
-
   _register() async {
-    if(nameController.text.isEmpty) {
+    if (nameController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل الأسم",
+          message: "أدخل الأسم",
         ),
       );
       return;
     }
-    if(emailController.text.isEmpty) {
+    if (emailController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل البريد الألكتروني",
+          message: "أدخل البريد الألكتروني",
         ),
       );
       return;
     }
-    if(passwordController.text.isEmpty) {
+    if (passwordController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل كلمة المرور",
+          message: "أدخل كلمة المرور",
         ),
       );
       return;
@@ -58,89 +54,85 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "كلمة المرور يجب أن تكون أكبر من 6 حروف أو أرقام",
+          message: "كلمة المرور يجب أن تكون أكبر من 6 حروف أو أرقام",
         ),
       );
       return;
     }
-    if(confirmPasswordController.text.isEmpty) {
+    if (confirmPasswordController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل تأكيد كلمة المرور",
+          message: "أدخل تأكيد كلمة المرور",
         ),
       );
       return;
     }
-    if(passwordController.text != confirmPasswordController.text) {
+    if (passwordController.text != confirmPasswordController.text) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "كلمة المرور وتأكيد كلمة المرور غير متطابقان",
+          message: "كلمة المرور وتأكيد كلمة المرور غير متطابقان",
         ),
       );
       return;
     }
-    if(phoneController.text.isEmpty) {
+    if (phoneController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل رقم الجوال",
+          message: "أدخل رقم الجوال",
         ),
       );
       return;
     }
-    if(ageController.text.isEmpty) {
+    if (ageController.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل السن ",
+          message: "أدخل السن ",
         ),
       );
       return;
     }
 
-    if(isMale == false && isFemale == false) {
+    if (isMale == false && isFemale == false) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-          message:
-          "أدخل الجنس ",
+          message: "أدخل الجنس ",
         ),
       );
       return;
     }
 
     try {
-
       var formData = FormData.fromMap({
-        "name" : nameController.text,
-        "email" : emailController.text,
-        "password" : passwordController.text,
-        "password_confirmation" : confirmPasswordController.text,
-        "phone" : phoneController.text,
-        "gender" : isMale ? "male" : "female",
-        "age" : ageController.text,
+        "name": nameController.text,
+        "email": emailController.text,
+        "password": passwordController.text,
+        "password_confirmation": confirmPasswordController.text,
+        "phone": phoneController.text,
+        "gender": isMale ? "male" : "female",
+        "age": ageController.text,
       });
 
-      var response = await Dio().post("${AppConstance.api_url}/teacher/register",data: formData);
+      var response = await Dio()
+          .post("${AppConstance.api_url}/teacher/register", data: formData);
 
       print("response is ${response.statusCode}");
       print("response is ${response.data}");
 
-      if(response.statusCode == 200) {
+      if (response.statusCode == 200) {
         showTopSnackBar(
           context,
           CustomSnackBar.success(
-            message:
-            "تم التسجيل بنجاح",
+            message: "تم التسجيل بنجاح",
           ),
         );
+
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginScreen()));
       }
 
       setState(() {
@@ -153,22 +145,17 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
         isMale = false;
         isFemale = false;
       });
-
     } on DioError catch (exception) {
       /// Get custom massage for the exception
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-            message:
-            exception.response!.data['errors']['email'][0]
-        ),
+            message: exception.response!.data['errors']['email'][0]),
       );
     }
 
-
     // Navigator.of(context).push(
     //     MaterialPageRoute(builder: (context) => LoginScreen()));
-
   }
 
   @override
@@ -179,7 +166,10 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
         elevation: 0,
         title: Text(
           "تسجيل مدرس جديد",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -193,7 +183,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 height: 20,
               ),
 
-
               /// Name
               Row(
                 children: [
@@ -206,14 +195,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.name,
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "الأسم",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -244,11 +235,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
-
               const SizedBox(
                 height: 30,
               ),
-
 
               /// Email
               Row(
@@ -262,14 +251,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "البريد الألكتروني",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -304,7 +295,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 height: 30,
               ),
 
-
               /// Password
               Row(
                 children: [
@@ -327,7 +317,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "كلمة المرور",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -358,14 +348,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
-
-
               const SizedBox(
                 height: 30,
               ),
-
-
-
 
               /// Confirm Password
               Row(
@@ -389,7 +374,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "تأكيد كلمة المرور",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -420,13 +405,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
-
-
               const SizedBox(
                 height: 30,
               ),
-
-
 
               /// Phone
               Row(
@@ -440,14 +421,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: phoneController,
                 keyboardType: TextInputType.number,
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "رقم الجوال",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -478,12 +461,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
-
-
               const SizedBox(
                 height: 30,
               ),
-
 
               /// Age
               Row(
@@ -497,14 +477,16 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: ageController,
                 keyboardType: TextInputType.number,
                 cursorColor: AppConstance.mainColor,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                   hintText: "السن",
                   hintStyle: TextStyle(
                       color: Colors.grey.withOpacity(0.34),
@@ -535,11 +517,9 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
-
               const SizedBox(
                 height: 30,
               ),
-
 
               /// Gender
               Row(
@@ -593,7 +573,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                 ],
               ),
 
-
               const SizedBox(
                 height: 30,
               ),
@@ -610,7 +589,7 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
                       ),
                     ),
                     backgroundColor:
-                    MaterialStateProperty.all(AppConstance.mainColor),
+                        MaterialStateProperty.all(AppConstance.mainColor),
                   ),
                   onPressed: () {
                     _register();

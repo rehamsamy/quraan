@@ -28,7 +28,10 @@ class _StudentHomepageState extends State<StudentHomepage> {
         leading: Text(""),
         title: Text(
           "لوحة تحكم الطالب",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: AppConstance.mainColor),
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),
@@ -39,7 +42,6 @@ class _StudentHomepageState extends State<StudentHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               /// Profile
               Container(
                 height: 55,
@@ -47,10 +49,11 @@ class _StudentHomepageState extends State<StudentHomepage> {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize:
-                      MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -60,11 +63,11 @@ class _StudentHomepageState extends State<StudentHomepage> {
                         ),
                       ),
                       backgroundColor:
-                      MaterialStateProperty.all(AppConstance.mainColor),
+                          MaterialStateProperty.all(AppConstance.mainColor),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => StudentProfile()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => StudentProfile()));
                     },
                     child: const Text(
                       "الملف الشخصي",
@@ -188,7 +191,6 @@ class _StudentHomepageState extends State<StudentHomepage> {
                 height: 30,
               ),
 
-
               /// Logout
               Container(
                 height: 55,
@@ -196,10 +198,11 @@ class _StudentHomepageState extends State<StudentHomepage> {
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     style: ButtonStyle(
-                      padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize:
-                      MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
                       shape: MaterialStateProperty.all(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -209,12 +212,14 @@ class _StudentHomepageState extends State<StudentHomepage> {
                         ),
                       ),
                       backgroundColor:
-                      MaterialStateProperty.all(AppConstance.mainColor),
+                          MaterialStateProperty.all(AppConstance.mainColor),
                     ),
                     onPressed: () async {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       prefs.clear();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
                     },
                     child: const Text(
                       " تسجيل الخروج",
