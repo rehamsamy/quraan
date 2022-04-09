@@ -115,133 +115,131 @@ class _TeacherManagementState extends State<TeacherManagement> {
                   child: ListView.builder(
                     itemCount: teacherList.length,
                     itemBuilder: (context, index) {
-                      return Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 15),
-                          margin: EdgeInsets.only(bottom: 15),
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: AppConstance.mainColor.withOpacity(.4),
-                                  width: 1)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /// Name
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "الأسم : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: AppConstance.mainColor),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    teacherList[index].name.toString(),
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ))
-                                ],
-                              ),
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 15),
+                        margin: EdgeInsets.only(bottom: 15),
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10.0),
+                            border: Border.all(
+                                color: AppConstance.mainColor.withOpacity(.4),
+                                width: 1)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /// Name
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "الأسم : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppConstance.mainColor),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  teacherList[index].name.toString(),
+                                  softWrap: true,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
 
-                              SizedBox(
-                                height: 5,
-                              ),
+                            SizedBox(
+                              height: 5,
+                            ),
 
-                              /// Email
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "البريد الألكتروني : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: AppConstance.mainColor),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    teacherList[index].email.toString(),
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ))
-                                ],
-                              ),
+                            /// Email
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "البريد الألكتروني : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppConstance.mainColor),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  teacherList[index].email.toString(),
+                                  softWrap: true,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
 
-                              SizedBox(
-                                height: 5,
-                              ),
+                            SizedBox(
+                              height: 5,
+                            ),
 
-                              /// Phone
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "رقم الجوال : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: AppConstance.mainColor),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    teacherList[index].phone.toString(),
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ))
-                                ],
-                              ),
+                            /// Phone
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "رقم الجوال : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppConstance.mainColor),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  teacherList[index].phone.toString(),
+                                  softWrap: true,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
 
-                              SizedBox(
-                                height: 5,
-                              ),
+                            SizedBox(
+                              height: 5,
+                            ),
 
-                              /// Age
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "السن : ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
-                                        color: AppConstance.mainColor),
-                                  ),
-                                  Expanded(
-                                      child: Text(
-                                    teacherList[index].age.toString(),
-                                    softWrap: true,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ))
-                                ],
-                              ),
+                            /// Age
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "السن : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppConstance.mainColor),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                  teacherList[index].age.toString(),
+                                  softWrap: true,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          removeTeacher(teacherList[index].id);
-                                        });
-                                      },
-                                      child: Text(
-                                        "حذف",
-                                        style: TextStyle(color: Colors.red),
-                                      )),
-                                ],
-                              )
-                            ],
-                          ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        removeTeacher(teacherList[index].id);
+                                      });
+                                    },
+                                    child: Text(
+                                      "حذف",
+                                      style: TextStyle(color: Colors.red),
+                                    )),
+                              ],
+                            )
+                          ],
                         ),
                       );
                     },

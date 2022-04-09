@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/screens/admin/admin_profile.dart';
+import 'package:quraan/screens/admin/sessions/all_sessions.dart';
 import 'package:quraan/screens/admin/student_manage_screen.dart';
 import 'package:quraan/screens/admin/teacher_manage_screen.dart';
 import 'package:quraan/screens/login_screen.dart';
 import 'package:quraan/screens/student_register_screen.dart';
+import 'package:quraan/sharedText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminHomePage extends StatefulWidget {
@@ -15,6 +17,7 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,38 +164,46 @@ class _AdminHomePageState extends State<AdminHomePage> {
               height: 30,
             ),
 
-            // /// Add Session
-            // Container(
-            //   height: 55,
-            //   padding: EdgeInsets.symmetric(horizontal: 20),
-            //   width: MediaQuery.of(context).size.width,
-            //   child: ElevatedButton(
-            //       style: ButtonStyle(
-            //         padding: MaterialStateProperty.all(
-            //             const EdgeInsets.symmetric(
-            //                 vertical: 13, horizontal: 10)),
-            //         elevation: MaterialStateProperty.all<double>(0),
-            //         fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
-            //         shape: MaterialStateProperty.all(
-            //           RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(50),
-            //           ),
-            //         ),
-            //         backgroundColor:
-            //             MaterialStateProperty.all(AppConstance.mainColor),
-            //       ),
-            //       onPressed: () {
-            //         Navigator.of(context).push(MaterialPageRoute(
-            //             builder: (context) => AdminProfile()));
-            //       },
-            //       child: const Text(
-            //         "إضافة جلسة",
-            //         style: TextStyle(
-            //             color: Color(0XFFFAFAFA),
-            //             fontSize: 16,
-            //             fontWeight: FontWeight.w600),
-            //       )),
-            // ),
+            /// Add Session
+            Container(
+              height: 55,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            vertical: 13, horizontal: 10)),
+                    elevation: MaterialStateProperty.all<double>(0),
+                    fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          bottomRight: Radius.circular(50),
+                        ),
+                      ),
+                    ),
+                    backgroundColor:
+                    MaterialStateProperty.all(AppConstance.mainColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AllSessions()));
+                  },
+                  child: const Text(
+                    "الجلسات",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
+            ),
+
+            const SizedBox(
+              height: 30,
+            ),
+
             //
             // const SizedBox(
             //   height: 30,

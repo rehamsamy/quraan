@@ -82,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
         print("password is ${passwordController.text}");
         prefs.setString("password", passwordController.text);
         SharedText.password = prefs.getString("password")!;
+        print("token ${userToken}");
         showTopSnackBar(
           context,
           CustomSnackBar.success(
