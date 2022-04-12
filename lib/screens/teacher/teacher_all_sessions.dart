@@ -1,28 +1,21 @@
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/models/session_model.dart';
-import 'package:quraan/models/student_model.dart';
-import 'package:quraan/models/teacher_model.dart';
 import 'package:quraan/models/user_model.dart';
-import 'package:quraan/screens/admin/sessions/add_session.dart';
-import 'package:quraan/screens/admin/sessions/session_details.dart';
-import 'package:quraan/screens/admin/sessions/update_session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class AllSessions extends StatefulWidget {
-  const AllSessions({Key? key}) : super(key: key);
+class TeacherAllSessions extends StatefulWidget {
+  const TeacherAllSessions({Key? key}) : super(key: key);
 
   @override
-  _AllSessionsState createState() => _AllSessionsState();
+  _TeacherAllSessionsState createState() => _TeacherAllSessionsState();
 }
 
-class _AllSessionsState extends State<AllSessions> {
+class _TeacherAllSessionsState extends State<TeacherAllSessions> {
   UserModel userModel = UserModel();
   List<SessionModel> sessionList = [];
   bool isLoading = false;
@@ -33,7 +26,10 @@ class _AllSessionsState extends State<AllSessions> {
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      var response = await Dio().get("${AppConstance.api_url}/sessions",
+      userModel =
+          UserModel.fromJson(json.decode(prefs.getString("userModel")!));
+      var response = await Dio().get(
+          "${AppConstance.api_url}/teacher/${userModel.userData!.id}/sessions",
           options: Options(headers: {
             'Authorization':
                 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
@@ -55,29 +51,6 @@ class _AllSessionsState extends State<AllSessions> {
     }
   }
 
-  removeSession(id) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    try {
-      var response =
-          await Dio().delete("${AppConstance.api_url}/sessions/${id}",
-              options: Options(headers: {
-                'Authorization':
-                    'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
-              }));
-      if (response.statusCode == 200) {
-        showTopSnackBar(
-          context,
-          CustomSnackBar.success(
-            message: "تم الحذف بنجاح",
-          ),
-        );
-        getAllSessions();
-      }
-    } on DioError catch (exception) {
-      /// Get custom massage for the exception
-    }
-  }
-
   @override
   void initState() {
     getAllSessions();
@@ -91,7 +64,7 @@ class _AllSessionsState extends State<AllSessions> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "إدارة الجلسات",
+          "الجلسات",
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -116,23 +89,6 @@ class _AllSessionsState extends State<AllSessions> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AddSessionScreen(),
-                                    ));
-                              },
-                              child: Text(
-                                "إضافة جلسة جديدة",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                        ],
-                      ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -256,26 +212,36 @@ class _AllSessionsState extends State<AllSessions> {
                                     height: 5,
                                   ),
 
-                                  /// Teacher name
+                                  /// Session Link
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "أسم المعلم : ",
+                                        "رابط الجلسة :",
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 16,
                                             color: AppConstance.mainColor),
                                       ),
                                       Expanded(
-                                          child: Text(
-                                        sessionList[index]
-                                            .teacher!
-                                            .name
-                                            .toString(),
-                                        softWrap: true,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                          child: GestureDetector(
+                                        onTap: () async {
+                                          var url = sessionList[index]
+                                              .link
+                                              .toString();
+                                          if (await canLaunch(url)) {
+                                            await launch(url,
+                                                forceSafariVC: false);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Text(
+                                          sessionList[index].link.toString(),
+                                          softWrap: true,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ))
                                     ],
                                   ),
@@ -306,57 +272,6 @@ class _AllSessionsState extends State<AllSessions> {
                                       ))
                                     ],
                                   ),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              removeSession(
-                                                  sessionList[index].id);
-                                            });
-                                          },
-                                          child: Text(
-                                            "حذف",
-                                            style: TextStyle(color: Colors.red),
-                                          )),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UpdateSessionScreen(
-                                                          sessionModel:
-                                                              sessionList[
-                                                                  index]),
-                                                ));
-                                          },
-                                          child: Text(
-                                            "تعديل",
-                                            style:
-                                                TextStyle(color: Colors.green),
-                                          )),
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SessionDetailsScreen(
-                                                          sessionModel:
-                                                              sessionList[
-                                                                  index]),
-                                                ));
-                                          },
-                                          child: Text(
-                                            "التفاصيل",
-                                            style: TextStyle(
-                                                color: AppConstance.mainColor),
-                                          )),
-                                    ],
-                                  )
                                 ],
                               ),
                             );

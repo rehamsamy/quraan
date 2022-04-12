@@ -53,7 +53,6 @@ class _TeacherProfileState extends State<TeacherProfile> {
     setState(() {
       userModel =
           UserModel.fromJson(json.decode(prefs.getString("userModel")!));
-      print("userModelData ${userModel.userData!.id}");
       getUserDataFromUrl(userModel.userData!.id);
     });
   }

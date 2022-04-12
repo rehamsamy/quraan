@@ -19,14 +19,15 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SessionDetailsScreen extends StatefulWidget {
   SessionModel sessionModel;
-  SessionDetailsScreen({Key? key,required this.sessionModel}) : super(key: key);
+
+  SessionDetailsScreen({Key? key, required this.sessionModel})
+      : super(key: key);
 
   @override
   _SessionDetailsScreenState createState() => _SessionDetailsScreenState();
 }
 
 class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +93,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                 height: 20,
               ),
 
-
               /// Session Start
               Container(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
@@ -129,7 +129,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ),
               ),
-
 
               const SizedBox(
                 height: 20,
@@ -294,7 +293,6 @@ class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),

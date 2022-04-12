@@ -42,8 +42,6 @@ class _TeacherManagementState extends State<TeacherManagement> {
               .toList();
           isLoading = false;
         });
-        print("list of student are ${teacherList.length}");
-        print("list of student are ${teacherList}");
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
@@ -116,8 +114,8 @@ class _TeacherManagementState extends State<TeacherManagement> {
                     itemCount: teacherList.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 15),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 15),
                         margin: EdgeInsets.only(bottom: 15),
                         decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.5),

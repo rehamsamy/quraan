@@ -19,7 +19,8 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class UpdateSessionScreen extends StatefulWidget {
   SessionModel sessionModel;
-   UpdateSessionScreen({Key? key,required this.sessionModel}) : super(key: key);
+
+  UpdateSessionScreen({Key? key, required this.sessionModel}) : super(key: key);
 
   @override
   _UpdateSessionScreenState createState() => _UpdateSessionScreenState();
@@ -50,7 +51,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       var response = await Dio().get("${AppConstance.api_url}/teacher/all",
           options: Options(headers: {
             'Authorization':
-            'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
 
       if (response.statusCode == 200) {
@@ -60,8 +61,6 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
               .toList();
           isLoading = false;
         });
-        print("list of student are ${teacherList.length}");
-        print("list of student are ${teacherList}");
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
@@ -72,7 +71,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
   }
 
   updateSession() async {
-    if(start.text.isEmpty) {
+    if (start.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -82,8 +81,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
-    if(end.text.isEmpty) {
+    if (end.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -93,8 +91,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
-    if(numberOfStudent.text.isEmpty) {
+    if (numberOfStudent.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -104,8 +101,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
-    if(int.parse(numberOfStudent.text) > 50) {
+    if (int.parse(numberOfStudent.text) > 50) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -115,8 +111,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
-    if(zoomLink.text.isEmpty) {
+    if (zoomLink.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -126,8 +121,7 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
-    if(teacherModel == null) {
+    if (teacherModel == null) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -136,7 +130,6 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       );
       return;
     }
-
 
     if (active == false && notActive == false) {
       showTopSnackBar(
@@ -148,17 +141,14 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       return;
     }
 
-
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var response = await Dio()
-          .put("${AppConstance.api_url}/sessions/${widget.sessionModel.id}?start=${start.text}&end=${end.text}&teacher_id=${teacherModel!.id}&number_of_students=${numberOfStudent.text}&link=${zoomLink.text}&status=${active ? "1" : "0" }",options: Options(headers: {
-        'Authorization':
-        'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
-      }));
-
-      print("response is ${response.statusCode}");
-      print("response is ${response.data}");
+      var response = await Dio().put(
+          "${AppConstance.api_url}/sessions/${widget.sessionModel.id}?start=${start.text}&end=${end.text}&teacher_id=${teacherModel!.id}&number_of_students=${numberOfStudent.text}&link=${zoomLink.text}&status=${active ? "1" : "0"}",
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+          }));
 
       if (response.statusCode == 200) {
         showTopSnackBar(
@@ -182,7 +172,6 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       });
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("fmkdfkdmfdmfkdmkfm ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -197,10 +186,10 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       end.text = widget.sessionModel.end.toString();
       numberOfStudent.text = widget.sessionModel.numberOfStudents.toString();
       zoomLink.text = widget.sessionModel.link.toString();
-      if(widget.sessionModel.status == "1") {
+      if (widget.sessionModel.status == "1") {
         active = true;
         notActive = false;
-      }else if( widget.sessionModel.status == "0") {
+      } else if (widget.sessionModel.status == "0") {
         active = false;
         notActive = true;
       }
@@ -231,458 +220,451 @@ class _UpdateSessionScreenState extends State<UpdateSessionScreen> {
       ),
       body: isLoading
           ? Center(
-        child: Container(
-          height: 50,
-          child: SpinKitSquareCircle(
-            color: AppConstance.mainColor,
-            size: 50.0,
-          ),
-        ),
-      )
-          : Container(
-        height: MediaQuery.of(context).size.height,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        child: Center(
-          child: ListView(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-
-              /// Start
-              Row(
-                children: [
-                  Text(
-                    "بداية الجلسة",
-                    style: TextStyle(
-                        color: AppConstance.mainColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: start,
-                readOnly: true,
-                keyboardType: TextInputType.emailAddress,
-                cursorColor: AppConstance.mainColor,
-                onTap: () async {
-                  DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: startDateTime,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2050));
-
-                  if (picked == null) return;
-
-                  TimeOfDay? pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay(
-                        hour: startDateTime.hour,
-                        minute: startDateTime.minute),
-                  );
-
-                  if (pickedTime == null) return;
-
-                  final newDateTime = DateTime(picked.year, picked.month,
-                      picked.day, pickedTime.hour, pickedTime.minute);
-
-                  setState(() {
-                    startDateTime = newDateTime;
-                    start.text = startDateTime.toString();
-                  });
-                },
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "بداية الجلسة",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              /// End
-              Row(
-                children: [
-                  Text(
-                    "نهاية الجلسة",
-                    style: TextStyle(
-                        color: AppConstance.mainColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: end,
-                readOnly: true,
-                keyboardType: TextInputType.emailAddress,
-                cursorColor: AppConstance.mainColor,
-                onTap: () async {
-                  DateTime? picked = await showDatePicker(
-                      context: context,
-                      initialDate: endDateTime,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2050));
-
-                  if (picked == null) return;
-
-                  TimeOfDay? pickedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay(
-                        hour: endDateTime.hour,
-                        minute: endDateTime.minute),
-                  );
-
-                  if (pickedTime == null) return;
-
-                  final newDateTime = DateTime(picked.year, picked.month,
-                      picked.day, pickedTime.hour, pickedTime.minute);
-
-                  setState(() {
-                    endDateTime = newDateTime;
-                    end.text = endDateTime.toString();
-                  });
-                },
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "بداية الجلسة",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              /// Number Of Students
-              Row(
-                children: [
-                  Text(
-                    "عدد الطلبة",
-                    style: TextStyle(
-                        color: AppConstance.mainColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: numberOfStudent,
-                keyboardType: TextInputType.number,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "عدد الطلبة",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-              const SizedBox(
-                height: 30,
-              ),
-
-              /// session link
-              Row(
-                children: [
-                  Text(
-                    "رابط الجلسة",
-                    style: TextStyle(
-                        color: AppConstance.mainColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                controller: zoomLink,
-                keyboardType: TextInputType.text,
-                cursorColor: AppConstance.mainColor,
-                decoration: InputDecoration(
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                  hintText: "رابط الجلسة",
-                  hintStyle: TextStyle(
-                      color: Colors.grey.withOpacity(0.34),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                onFieldSubmitted: (value) {
-                  //Validator
-                },
-                // validator: widget.validationFunction,
-              ),
-
-
-              const SizedBox(
-                height: 30,
-              ),
-
-
-              /// Select Teacher
-              Row(
-                children: [
-                  Text(
-                    "أحتر المعلم",
-                    style: TextStyle(
-                        color: AppConstance.mainColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: Colors.grey,)
-                ),
-                child: DropdownButton<TeacherModel>(
-                  // value: "",
-                  icon: Text(""),
-                  isExpanded: true,
-                  underline: const Text(""),
-                  hint: Center(
-                    child: Text(
-                      teacherModel == null
-                          ? "أختر المعلم"
-                          : teacherModel!.name!.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: teacherModel == null
-                              ? Colors.grey
-                              : Colors.white,
-                          fontSize: 16),
-                    ),
-                  ),
-                  items: teacherList.map((TeacherModel teacherModel) {
-                    return DropdownMenuItem<TeacherModel>(
-                      value: teacherModel,
-                      child: Center(
-                        child: Text(
-                          teacherModel.name!,
-                          style: const TextStyle(
-                              fontFamily: "Almarai",
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      teacherModel = value;
-                      // productID = int.parse(value!.productId!);
-                      // quantity.text = value.quantity.toString();
-                      // selectedProductQuantity = value.quantity;
-                      // debugPrint('_productItem: ${value.quantity}');
-                    });
-                  },
-                ),
-              ),
-
-
-              /// Active Or Not Active
-              Row(
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Text(
-                          "مفعل",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
-                        ),
-                        Checkbox(
-                          activeColor: AppConstance.mainColor,
-                          value: active,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              notActive = false;
-                              active = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Text(
-                          "غير مفعل",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14),
-                        ),
-                        Checkbox(
-                          activeColor: AppConstance.mainColor,
-                          value: notActive,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              notActive = true;
-                              active = false;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(
+              child: Container(
                 height: 50,
+                child: SpinKitSquareCircle(
+                  color: AppConstance.mainColor,
+                  size: 50.0,
+                ),
               ),
+            )
+          : Container(
+              height: MediaQuery.of(context).size.height,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Center(
+                child: ListView(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
 
-              ElevatedButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            vertical: 13, horizontal: 10)),
-                    elevation: MaterialStateProperty.all<double>(0),
-                    fixedSize:
-                    MaterialStateProperty.all<Size>(Size(200, 45)),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+                    /// Start
+                    Row(
+                      children: [
+                        Text(
+                          "بداية الجلسة",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: start,
+                      readOnly: true,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: AppConstance.mainColor,
+                      onTap: () async {
+                        DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: startDateTime,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2050));
+
+                        if (picked == null) return;
+
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay(
+                              hour: startDateTime.hour,
+                              minute: startDateTime.minute),
+                        );
+
+                        if (pickedTime == null) return;
+
+                        final newDateTime = DateTime(picked.year, picked.month,
+                            picked.day, pickedTime.hour, pickedTime.minute);
+
+                        setState(() {
+                          startDateTime = newDateTime;
+                          start.text = startDateTime.toString();
+                        });
+                      },
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        hintText: "بداية الجلسة",
+                        hintStyle: TextStyle(
+                            color: Colors.grey.withOpacity(0.34),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onFieldSubmitted: (value) {
+                        //Validator
+                      },
+                      // validator: widget.validationFunction,
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    /// End
+                    Row(
+                      children: [
+                        Text(
+                          "نهاية الجلسة",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: end,
+                      readOnly: true,
+                      keyboardType: TextInputType.emailAddress,
+                      cursorColor: AppConstance.mainColor,
+                      onTap: () async {
+                        DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: endDateTime,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime(2050));
+
+                        if (picked == null) return;
+
+                        TimeOfDay? pickedTime = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay(
+                              hour: endDateTime.hour,
+                              minute: endDateTime.minute),
+                        );
+
+                        if (pickedTime == null) return;
+
+                        final newDateTime = DateTime(picked.year, picked.month,
+                            picked.day, pickedTime.hour, pickedTime.minute);
+
+                        setState(() {
+                          endDateTime = newDateTime;
+                          end.text = endDateTime.toString();
+                        });
+                      },
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        hintText: "بداية الجلسة",
+                        hintStyle: TextStyle(
+                            color: Colors.grey.withOpacity(0.34),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onFieldSubmitted: (value) {
+                        //Validator
+                      },
+                      // validator: widget.validationFunction,
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    /// Number Of Students
+                    Row(
+                      children: [
+                        Text(
+                          "عدد الطلبة",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: numberOfStudent,
+                      keyboardType: TextInputType.number,
+                      cursorColor: AppConstance.mainColor,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        hintText: "عدد الطلبة",
+                        hintStyle: TextStyle(
+                            color: Colors.grey.withOpacity(0.34),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onFieldSubmitted: (value) {
+                        //Validator
+                      },
+                      // validator: widget.validationFunction,
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    /// session link
+                    Row(
+                      children: [
+                        Text(
+                          "رابط الجلسة",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: zoomLink,
+                      keyboardType: TextInputType.text,
+                      cursorColor: AppConstance.mainColor,
+                      decoration: InputDecoration(
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        hintText: "رابط الجلسة",
+                        hintStyle: TextStyle(
+                            color: Colors.grey.withOpacity(0.34),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onFieldSubmitted: (value) {
+                        //Validator
+                      },
+                      // validator: widget.validationFunction,
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    /// Select Teacher
+                    Row(
+                      children: [
+                        Text(
+                          "أحتر المعلم",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                            color: Colors.grey,
+                          )),
+                      child: DropdownButton<TeacherModel>(
+                        // value: "",
+                        icon: Text(""),
+                        isExpanded: true,
+                        underline: const Text(""),
+                        hint: Center(
+                          child: Text(
+                            teacherModel == null
+                                ? "أختر المعلم"
+                                : teacherModel!.name!.toString(),
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: teacherModel == null
+                                    ? Colors.grey
+                                    : Colors.white,
+                                fontSize: 16),
+                          ),
+                        ),
+                        items: teacherList.map((TeacherModel teacherModel) {
+                          return DropdownMenuItem<TeacherModel>(
+                            value: teacherModel,
+                            child: Center(
+                              child: Text(
+                                teacherModel.name!,
+                                style: const TextStyle(
+                                    fontFamily: "Almarai",
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            teacherModel = value;
+                          });
+                        },
                       ),
                     ),
-                    backgroundColor:
-                    MaterialStateProperty.all(AppConstance.mainColor),
-                  ),
-                  onPressed: () {
-                    updateSession();
-                  },
-                  child: const Text(
-                    "تعديل الجلسة",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600),
-                  )),
 
-            ],
-          ),
-        ),
-      ),
+                    /// Active Or Not Active
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                "مفعل",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14),
+                              ),
+                              Checkbox(
+                                activeColor: AppConstance.mainColor,
+                                value: active,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    notActive = false;
+                                    active = true;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                "غير مفعل",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14),
+                              ),
+                              Checkbox(
+                                activeColor: AppConstance.mainColor,
+                                value: notActive,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    notActive = true;
+                                    active = false;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 50,
+                    ),
+
+                    ElevatedButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(
+                                  vertical: 13, horizontal: 10)),
+                          elevation: MaterialStateProperty.all<double>(0),
+                          fixedSize:
+                              MaterialStateProperty.all<Size>(Size(200, 45)),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                          ),
+                          backgroundColor:
+                              MaterialStateProperty.all(AppConstance.mainColor),
+                        ),
+                        onPressed: () {
+                          updateSession();
+                        },
+                        child: const Text(
+                          "تعديل الجلسة",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600),
+                        )),
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

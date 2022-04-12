@@ -101,8 +101,6 @@ class _EditTeacherProfileState extends State<EditTeacherProfile> {
                 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
 
-      print("response is ${response.statusCode}");
-      print("response is ${response.data}");
 
       if (response.statusCode == 200) {
         Navigator.pop(context);
@@ -128,7 +126,6 @@ class _EditTeacherProfileState extends State<EditTeacherProfile> {
   }
 
   getUserDataFromUrl(studentID) async {
-    print("id is ${studentID}");
     setState(() {
       isLoading = true;
     });

@@ -17,7 +17,6 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,11 +184,11 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       ),
                     ),
                     backgroundColor:
-                    MaterialStateProperty.all(AppConstance.mainColor),
+                        MaterialStateProperty.all(AppConstance.mainColor),
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AllSessions()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AllSessions()));
                   },
                   child: const Text(
                     "الجلسات",

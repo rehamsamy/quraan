@@ -57,8 +57,6 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
               .toList();
           isLoading = false;
         });
-        print("list of student are ${teacherList.length}");
-        print("list of student are ${teacherList}");
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
@@ -69,7 +67,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
   }
 
   addSession() async {
-    if(start.text.isEmpty) {
+    if (start.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -79,8 +77,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
-
-    if(end.text.isEmpty) {
+    if (end.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -90,8 +87,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
-
-    if(numberOfStudent.text.isEmpty) {
+    if (numberOfStudent.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -101,9 +97,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
-
-
-    if(int.parse(numberOfStudent.text) > 50) {
+    if (int.parse(numberOfStudent.text) > 50) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -113,8 +107,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
-
-    if(zoomLink.text.isEmpty) {
+    if (zoomLink.text.isEmpty) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -124,8 +117,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
-
-    if(teacherModel == null) {
+    if (teacherModel == null) {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -134,7 +126,6 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       );
       return;
     }
-
 
     if (active == false && notActive == false) {
       showTopSnackBar(
@@ -145,7 +136,6 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       );
       return;
     }
-
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -158,14 +148,13 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
         "status": active ? 1 : 0,
       });
 
-      var response = await Dio()
-          .post("${AppConstance.api_url}/sessions", data: formData,options: Options(headers: {
-        'Authorization':
-        'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
-      }));
+      var response = await Dio().post("${AppConstance.api_url}/sessions",
+          data: formData,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+          }));
 
-      print("response is ${response.statusCode}");
-      print("response is ${response.data}");
 
       if (response.statusCode == 200) {
         showTopSnackBar(
@@ -189,7 +178,6 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       });
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("errorrrrrrrrr ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -515,11 +503,9 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                       // validator: widget.validationFunction,
                     ),
 
-
                     const SizedBox(
                       height: 30,
                     ),
-
 
                     /// Select Teacher
                     Row(
@@ -538,9 +524,10 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(color: Colors.grey,)
-                      ),
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border.all(
+                            color: Colors.grey,
+                          )),
                       child: DropdownButton<TeacherModel>(
                         // value: "",
                         icon: Text(""),
@@ -576,15 +563,10 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                         onChanged: (value) {
                           setState(() {
                             teacherModel = value;
-                            // productID = int.parse(value!.productId!);
-                            // quantity.text = value.quantity.toString();
-                            // selectedProductQuantity = value.quantity;
-                            // debugPrint('_productItem: ${value.quantity}');
                           });
                         },
                       ),
                     ),
-
 
                     /// Active Or Not Active
                     Row(
@@ -668,7 +650,6 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                               fontSize: 15,
                               fontWeight: FontWeight.w600),
                         )),
-
                   ],
                 ),
               ),

@@ -41,12 +41,9 @@ class _StudentManagementState extends State<StudentManagement> {
               .toList();
           isLoading = false;
         });
-        print("list of student are ${studentList.length}");
-        print("list of student are ${studentList}");
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("feererer ${exception.response!.data}");
       setState(() {
         isLoading = false;
       });

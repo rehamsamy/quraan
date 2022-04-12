@@ -79,10 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         prefs.setString("userModel", userMod);
         prefs.setString("tokenAccess", userToken);
-        print("password is ${passwordController.text}");
         prefs.setString("password", passwordController.text);
         SharedText.password = prefs.getString("password")!;
-        print("token ${userToken}");
         showTopSnackBar(
           context,
           CustomSnackBar.success(
@@ -109,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("feererer ${exception.response}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(message: exception.response!.data['error']),

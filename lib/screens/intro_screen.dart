@@ -27,8 +27,6 @@ class _IntroScreenState extends State<IntroScreen> {
       SharedText.userObj = prefs.getString("userModel")!;
       SharedText.userToken = prefs.getString("tokenAccess")!;
       SharedText.password = prefs.getString("password")!;
-      print(
-          "print user role ${json.decode(prefs.getString("userModel")!)['role']}");
       if (json.decode(prefs.getString("userModel")!)['role'] == "admin") {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const AdminHomePage()));

@@ -120,9 +120,6 @@ class _TeacherRegisterScreenState extends State<TeacherRegisterScreen> {
       var response = await Dio()
           .post("${AppConstance.api_url}/teacher/register", data: formData);
 
-      print("response is ${response.statusCode}");
-      print("response is ${response.data}");
-
       if (response.statusCode == 200) {
         showTopSnackBar(
           context,
