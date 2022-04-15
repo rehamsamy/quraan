@@ -16,11 +16,14 @@ class _EnterAttendanceState extends State<EnterAttendance> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppConstance.mainColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "إضافة الغياب",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          "الحضور والإنصراف",
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              color: AppConstance.mainColor),
         ),
         centerTitle: true,
       ),

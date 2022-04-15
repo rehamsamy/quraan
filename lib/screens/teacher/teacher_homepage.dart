@@ -7,6 +7,7 @@ import 'package:quraan/screens/teacher/add_session.dart';
 import 'package:quraan/screens/teacher/enter_attendance.dart';
 import 'package:quraan/screens/teacher/student_info.dart';
 import 'package:quraan/screens/teacher/teacher_all_sessions.dart';
+import 'package:quraan/screens/teacher/attendance/teacher_attendance.dart';
 import 'package:quraan/screens/teacher/teacher_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +42,7 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+             const SizedBox(
                 height: 40,
               ),
 
@@ -58,7 +59,7 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                       elevation: MaterialStateProperty.all<double>(0),
                       fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
                       shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
                             bottomRight: Radius.circular(50),
@@ -268,6 +269,47 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
               // const SizedBox(
               //   height: 30,
               // ),
+
+
+              /// Attendance
+              Container(
+                height: 55,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const TeacherAttendance()));
+                    },
+                    child: const Text(
+                      "الحضور والإنصراف",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
 
               /// Logout
               Container(
