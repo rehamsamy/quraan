@@ -149,7 +149,6 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("fkfmkdfmd ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
