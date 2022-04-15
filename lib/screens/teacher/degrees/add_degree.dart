@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
@@ -10,14 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class AddNewAttendance extends StatefulWidget {
-  const AddNewAttendance({Key? key}) : super(key: key);
+class TeacherAddDegree extends StatefulWidget {
+  const TeacherAddDegree({Key? key}) : super(key: key);
 
   @override
-  State<AddNewAttendance> createState() => _AddNewAttendanceState();
+  State<TeacherAddDegree> createState() => _TeacherAddDegreeState();
 }
 
-class _AddNewAttendanceState extends State<AddNewAttendance> {
+class _TeacherAddDegreeState extends State<TeacherAddDegree> {
   var dio = Dio();
   List<StudentModel> studentsList = [];
   List<SessionModel> sessionsList = [];
@@ -25,8 +24,7 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
   SessionModel? sessionModel;
   bool isLoading = false;
   UserModel userModel = UserModel();
-  bool absence = false;
-  bool presence = false;
+TextEditingController gradeController = TextEditingController();
   int? teacherID;
 
   getAllStudents() async {
@@ -38,7 +36,7 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
       var response = await Dio().get("${AppConstance.api_url}/student/all",
           options: Options(headers: {
             'Authorization':
-                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+            'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
       if (response.statusCode == 200) {
         setState(() {
@@ -71,7 +69,7 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
           "${AppConstance.api_url}/teacher/${userModel.userData!.id}/sessions",
           options: Options(headers: {
             'Authorization':
-                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+            'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
       if (response.statusCode == 200) {
         setState(() {
@@ -89,7 +87,7 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
     }
   }
 
-  addAttendance() async {
+  addGrade() async {
     if (studentModel == null) {
       showTopSnackBar(
         context,
@@ -110,11 +108,11 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
       return;
     }
 
-    if (absence == false && presence == false) {
+    if (gradeController.text.isEmpty) {
       showTopSnackBar(
         context,
         const CustomSnackBar.error(
-          message: "أدخل الغياب والحضور اولا ",
+          message: "أدخل الدرجة ",
         ),
       );
       return;
@@ -126,14 +124,14 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
         "session_id": sessionModel!.id,
         "teacher_id": teacherID,
         "student_id": studentModel!.id,
-        "status": presence ? 1 : 0,
+        "grade": gradeController.text,
       });
 
-      var response = await Dio().post("${AppConstance.api_url}/attendances",
+      var response = await Dio().post("${AppConstance.api_url}/grades",
           data: formData,
           options: Options(headers: {
             'Authorization':
-                'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
+            'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
 
       if (response.statusCode == 200) {
@@ -149,11 +147,10 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("fkfmkdfmd ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-            message: exception.response!.data['errors'][0]),
+            message: exception.response!.data['errors']['end']),
       );
     }
   }
@@ -172,7 +169,7 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "إضافة حضور وأنصراف",
+          "إضافة الدرجات",
           style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -313,56 +310,56 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
               height: 30,
             ),
 
-            /// Attendance
+            /// Grade
             Row(
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Text(
-                        "غياب",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14),
-                      ),
-                      Checkbox(
-                        activeColor: AppConstance.mainColor,
-                        value: absence,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            presence = false;
-                            absence = true;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Text(
-                        "حضور",
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14),
-                      ),
-                      Checkbox(
-                        activeColor: AppConstance.mainColor,
-                        value: presence,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            presence = true;
-                            absence = false;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                Text(
+                  "الدرجة",
+                  style: TextStyle(
+                      color: AppConstance.mainColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: gradeController,
+              keyboardType: TextInputType.text,
+              cursorColor: AppConstance.mainColor,
+              decoration: InputDecoration(
+                contentPadding:
+                EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                hintText: "الدرجة",
+                hintStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.34),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              onFieldSubmitted: (value) {
+                //Validator
+              },
+              // validator: widget.validationFunction,
             ),
 
             const SizedBox(
@@ -381,13 +378,13 @@ class _AddNewAttendanceState extends State<AddNewAttendance> {
                     ),
                   ),
                   backgroundColor:
-                      MaterialStateProperty.all(AppConstance.mainColor),
+                  MaterialStateProperty.all(AppConstance.mainColor),
                 ),
                 onPressed: () {
-                  addAttendance();
+                  addGrade();
                 },
                 child: const Text(
-                  "إضافة الجلسة",
+                  "إضافة الدرجة",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 15,

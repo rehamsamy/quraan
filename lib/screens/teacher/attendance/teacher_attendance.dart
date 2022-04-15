@@ -100,203 +100,203 @@ class _TeacherAttendanceState extends State<TeacherAttendance> {
           ),
           centerTitle: true,
         ),
-        body: ListView(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                    onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddNewAttendance(),));
-                    },
-                    child: const Text(
-                      "إضافة حضور وأنصراف",
-                      style: TextStyle(color: Colors.white),
-                    )),
-              ],
-            ),
-            isLoading
-                ? Center(
-                    child: Container(
-                      height: 50,
-                      child: SpinKitSquareCircle(
-                        color: AppConstance.mainColor,
-                        size: 50.0,
-                      ),
-                    ),
-                  )
-                : attendanceList.length == 0
-                    ? Center(
-                        child: Text("لا يوجد بيانات"),
-                      )
-                    : SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 16),
-                              child: ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: attendanceList.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 15),
-                                    margin: EdgeInsets.only(bottom: 15),
-                                    decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.5),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        border: Border.all(
-                                            color: AppConstance.mainColor
-                                                .withOpacity(.4),
-                                            width: 1)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-
-
-                                        /// Session Number
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "رقم الجلسة : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  color:
-                                                      AppConstance.mainColor),
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                                  attendanceList[index].sessionId.toString(),
-                                              softWrap: true,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ))
-                                          ],
-                                        ),
-
-
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-
-
-                                        /// Teacher Name
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "أسم المعلم : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  color:
-                                                  AppConstance.mainColor),
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                                  attendanceList[index].teacher!.name.toString(),
-                                                  softWrap: true,
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ))
-                                          ],
-                                        ),
-
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-
-                                        /// Student Name
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "أسم الطالب : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  color:
-                                                  AppConstance.mainColor),
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                                  attendanceList[index].student!.name.toString(),
-                                                  softWrap: true,
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ))
-                                          ],
-                                        ),
-
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-
-                                        /// Status
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "الحالة : ",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  color:
-                                                  AppConstance.mainColor),
-                                            ),
-                                            Expanded(
-                                                child: Text(
-                                                  attendanceList[index].status == "1" ? "حضور" : "غياب",
-                                                  softWrap: true,
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ))
-                                          ],
-                                        ),
-
-
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    removeAttendance(attendanceList[index].id);
-                                                  });
-                                                },
-                                                child: const Text(
-                                                  "حذف",
-                                                  style: TextStyle(color: Colors.red),
-                                                )),
-                                          ],
-                                        )
-
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddNewAttendance(),));
+                      },
+                      child: const Text(
+                        "إضافة حضور وأنصراف",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              isLoading
+                  ? Center(
+                      child: Container(
+                        height: 50,
+                        child: SpinKitSquareCircle(
+                          color: AppConstance.mainColor,
+                          size: 50.0,
                         ),
-                      )
-          ],
+                      ),
+                    )
+                  : attendanceList.length == 0
+                      ? Center(
+                          child: Text("لا يوجد بيانات"),
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 16),
+                                child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: attendanceList.length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 15),
+                                      margin: EdgeInsets.only(bottom: 15),
+                                      decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                              color: AppConstance.mainColor
+                                                  .withOpacity(.4),
+                                              width: 1)),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+
+
+                                          /// Session Number
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "رقم الجلسة : ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    color:
+                                                        AppConstance.mainColor),
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                    attendanceList[index].sessionId.toString(),
+                                                softWrap: true,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ))
+                                            ],
+                                          ),
+
+
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+
+
+                                          /// Teacher Name
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "أسم المعلم : ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    color:
+                                                    AppConstance.mainColor),
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                    attendanceList[index].teacher!.name.toString(),
+                                                    softWrap: true,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ))
+                                            ],
+                                          ),
+
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+
+                                          /// Student Name
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "أسم الطالب : ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    color:
+                                                    AppConstance.mainColor),
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                    attendanceList[index].student!.name.toString(),
+                                                    softWrap: true,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ))
+                                            ],
+                                          ),
+
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+
+                                          /// Status
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "الحالة : ",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16,
+                                                    color:
+                                                    AppConstance.mainColor),
+                                              ),
+                                              Expanded(
+                                                  child: Text(
+                                                    attendanceList[index].status == "1" ? "حضور" : "غياب",
+                                                    softWrap: true,
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ))
+                                            ],
+                                          ),
+
+
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      removeAttendance(attendanceList[index].id);
+                                                    });
+                                                  },
+                                                  child: const Text(
+                                                    "حذف",
+                                                    style: TextStyle(color: Colors.red),
+                                                  )),
+                                            ],
+                                          )
+
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+            ],
+          ),
         ));
   }
 }
