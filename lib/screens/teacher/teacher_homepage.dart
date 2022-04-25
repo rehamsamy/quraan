@@ -274,45 +274,45 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
 
 
               /// Grades
-              // Container(
-              //   height: 55,
-              //   padding: EdgeInsets.symmetric(horizontal: 20),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: ElevatedButton(
-              //       style: ButtonStyle(
-              //         padding: MaterialStateProperty.all(
-              //             const EdgeInsets.symmetric(
-              //                 vertical: 13, horizontal: 10)),
-              //         elevation: MaterialStateProperty.all<double>(0),
-              //         fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
-              //         shape: MaterialStateProperty.all(
-              //           const RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.only(
-              //               topLeft: Radius.circular(50),
-              //               bottomRight: Radius.circular(50),
-              //             ),
-              //           ),
-              //         ),
-              //         backgroundColor:
-              //         MaterialStateProperty.all(AppConstance.mainColor),
-              //       ),
-              //       onPressed: () {
-              //         Navigator.of(context).push(MaterialPageRoute(
-              //             builder: (context) => const TeacherGrades()));
-              //       },
-              //       child: const Text(
-              //         "الدرجات",
-              //         style: TextStyle(
-              //             color: Colors.black,
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w600),
-              //       )),
-              // ),
+              Container(
+                height: 55,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const TeacherGrades()));
+                    },
+                    child: const Text(
+                      "الدرجات",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
 
 
-              // const SizedBox(
-              //   height: 30,
-              // ),
+              const SizedBox(
+                height: 30,
+              ),
 
 
               /// Attendance

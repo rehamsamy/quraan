@@ -25,6 +25,8 @@ class _TeacherAddDegreeState extends State<TeacherAddDegree> {
   bool isLoading = false;
   UserModel userModel = UserModel();
 TextEditingController gradeController = TextEditingController();
+TextEditingController surahNameController = TextEditingController();
+TextEditingController partNumberController = TextEditingController();
   int? teacherID;
 
   getAllStudents() async {
@@ -118,6 +120,28 @@ TextEditingController gradeController = TextEditingController();
       return;
     }
 
+
+    if (surahNameController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        const CustomSnackBar.error(
+          message: "أدخل أسم السورة ",
+        ),
+      );
+      return;
+    }
+
+
+    if (partNumberController.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        const CustomSnackBar.error(
+          message: "أدخل رقم الجزء ",
+        ),
+      );
+      return;
+    }
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       var formData = FormData.fromMap({
@@ -125,6 +149,8 @@ TextEditingController gradeController = TextEditingController();
         "teacher_id": teacherID,
         "student_id": studentModel!.id,
         "grade": gradeController.text,
+        "surah_name": surahNameController.text,
+        "part_number": partNumberController.text,
       });
 
       var response = await Dio().post("${AppConstance.api_url}/grades",
@@ -147,6 +173,7 @@ TextEditingController gradeController = TextEditingController();
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
+      print("fmkfmdkfmd ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
@@ -327,12 +354,127 @@ TextEditingController gradeController = TextEditingController();
             ),
             TextFormField(
               controller: gradeController,
-              keyboardType: TextInputType.text,
+              keyboardType: TextInputType.number,
               cursorColor: AppConstance.mainColor,
               decoration: InputDecoration(
                 contentPadding:
                 EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 hintText: "الدرجة",
+                hintStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.34),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              onFieldSubmitted: (value) {
+                //Validator
+              },
+              // validator: widget.validationFunction,
+            ),
+
+
+            const SizedBox(
+              height: 30,
+            ),
+
+
+            /// Surah Name
+            Row(
+              children: [
+                Text(
+                  "أسم السورة",
+                  style: TextStyle(
+                      color: AppConstance.mainColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: surahNameController,
+              keyboardType: TextInputType.text,
+              cursorColor: AppConstance.mainColor,
+              decoration: InputDecoration(
+                contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                hintText: "أسم السورة",
+                hintStyle: TextStyle(
+                    color: Colors.grey.withOpacity(0.34),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              onFieldSubmitted: (value) {
+                //Validator
+              },
+              // validator: widget.validationFunction,
+            ),
+
+            const SizedBox(
+              height: 30,
+            ),
+
+
+            /// Part Number
+            Row(
+              children: [
+                Text(
+                  "رقم الجزء",
+                  style: TextStyle(
+                      color: AppConstance.mainColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: partNumberController,
+              keyboardType: TextInputType.number,
+              cursorColor: AppConstance.mainColor,
+              decoration: InputDecoration(
+                contentPadding:
+                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                hintText: "رقم الجزء",
                 hintStyle: TextStyle(
                     color: Colors.grey.withOpacity(0.34),
                     fontWeight: FontWeight.w600,

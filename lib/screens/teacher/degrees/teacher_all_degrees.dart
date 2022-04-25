@@ -271,6 +271,65 @@ class _TeacherGradesState extends State<TeacherGrades> {
 
 
 
+                                SizedBox(
+                                  height: 5,
+                                ),
+
+                                /// Surah Name
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "أسم السورة : ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color:
+                                          AppConstance.mainColor),
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          graderList[index].surahName.toString(),
+                                          softWrap: true,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ))
+                                  ],
+                                ),
+
+
+
+
+                              const SizedBox(
+                                  height: 5,
+                                ),
+
+                                /// Part Number
+                                Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "رقم الجزء : ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color:
+                                          AppConstance.mainColor),
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          graderList[index].partNumber.toString(),
+                                          softWrap: true,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ))
+                                  ],
+                                ),
+
+
+
                                 const SizedBox(
                                   height: 10,
                                 ),

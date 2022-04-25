@@ -18,6 +18,8 @@ class GradeListModel {
     this.teacher,
     this.student,
     this.session,
+    this.surahName,
+    this.partNumber
   });
 
   int? id;
@@ -25,6 +27,8 @@ class GradeListModel {
   String? studentId;
   String? teacherId;
   String? sessionId;
+  String? surahName;
+  String? partNumber;
   Student? teacher;
   Student? student;
   Session? session;
@@ -38,6 +42,8 @@ class GradeListModel {
     teacher: json["teacher"] == null ? null : Student.fromJson(json["teacher"]),
     student: json["student"] == null ? null : Student.fromJson(json["student"]),
     session: json["session"] == null ? null : Session.fromJson(json["session"]),
+    surahName: json["surah_name"] == null ? null : json["surah_name"],
+    partNumber: json["part_number"] == null ? null : json["part_number"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +55,8 @@ class GradeListModel {
     "teacher": teacher == null ? null : teacher!.toJson(),
     "student": student == null ? null : student!.toJson(),
     "session": session == null ? null : session!.toJson(),
+    "surah_name": surahName == null ? null : surahName,
+    "partNumber": partNumber == null ? null : partNumber,
   };
 }
 

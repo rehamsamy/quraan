@@ -79,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         prefs.setString("userModel", userMod);
         prefs.setString("tokenAccess", userToken);
+        print("fmkfmkm ${userToken}");
         prefs.setString("password", passwordController.text);
         SharedText.password = prefs.getString("password")!;
         showTopSnackBar(
