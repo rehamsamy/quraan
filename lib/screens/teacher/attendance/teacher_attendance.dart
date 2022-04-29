@@ -3,12 +3,10 @@ import 'package:quraan/models/attendance_model.dart';
 import 'package:quraan/screens/teacher/attendance/teacher_add_new_attendance.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
-import 'package:quraan/models/session_model.dart';
 import 'package:quraan/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

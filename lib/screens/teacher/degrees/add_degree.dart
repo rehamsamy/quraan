@@ -173,7 +173,6 @@ TextEditingController partNumberController = TextEditingController();
       }
     } on DioError catch (exception) {
       /// Get custom massage for the exception
-      print("fmkfmdkfmd ${exception.response!.data}");
       showTopSnackBar(
         context,
         CustomSnackBar.error(
