@@ -103,16 +103,6 @@ class _AddEsnadScreenState extends State<AddEsnadScreen> {
 
 
   addSession() async {
-    if (start.text.isEmpty) {
-      showTopSnackBar(
-        context,
-        CustomSnackBar.error(
-          message: "أدخل بداية الجلسة",
-        ),
-      );
-      return;
-    }
-
 
 
 
