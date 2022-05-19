@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
+import 'package:quraan/esnad/all_esnadat.dart';
 import 'package:quraan/screens/admin/admin_profile.dart';
 import 'package:quraan/screens/admin/sessions/all_sessions.dart';
 import 'package:quraan/screens/admin/student_manage_screen.dart';
@@ -42,6 +43,50 @@ class _AdminHomePageState extends State<AdminHomePage> {
             SizedBox(
               height: 40,
             ),
+
+
+            //esnad
+
+            Container(
+              height: 55,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            vertical: 13, horizontal: 10)),
+                    elevation: MaterialStateProperty.all<double>(0),
+                    fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          bottomRight: Radius.circular(50),
+                        ),
+                      ),
+                    ),
+                    backgroundColor:
+                    MaterialStateProperty.all(AppConstance.mainColor),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AllEsnadatScreen()));
+                  },
+                  child: const Text(
+                    "أسناد الطلاب للمعلمين",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
+                  )),
+            ),
+
+
+            SizedBox(
+              height: 40,
+            ),
+
 
             /// Profile
             Container(

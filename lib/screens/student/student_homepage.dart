@@ -42,6 +42,8 @@ class _StudentHomepageState extends State<StudentHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+
               /// Profile
               Container(
                 height: 55,
@@ -53,9 +55,9 @@ class _StudentHomepageState extends State<StudentHomepage> {
                           const EdgeInsets.symmetric(
                               vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
                       shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
                             bottomRight: Radius.circular(50),
@@ -67,7 +69,7 @@ class _StudentHomepageState extends State<StudentHomepage> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => StudentProfile()));
+                          builder: (context) => const StudentProfile()));
                     },
                     child: const Text(
                       "الملف الشخصي",
@@ -77,124 +79,16 @@ class _StudentHomepageState extends State<StudentHomepage> {
                           fontWeight: FontWeight.w600),
                     )),
               ),
-              //
-              // const SizedBox(
-              //   height: 30,
-              // ),
-              //
-              // /// Session List
-              // Container(
-              //   height: 55,
-              //   padding: EdgeInsets.symmetric(horizontal: 20),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: ElevatedButton(
-              //       style: ButtonStyle(
-              //         padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
-              //         elevation: MaterialStateProperty.all<double>(0),
-              //         fixedSize:
-              //         MaterialStateProperty.all<Size>(Size(200, 45)),
-              //         shape: MaterialStateProperty.all(
-              //           RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(50),
-              //           ),
-              //         ),
-              //         backgroundColor:
-              //         MaterialStateProperty.all(AppConstance.mainColor),
-              //       ),
-              //       onPressed: () {
-              //         Navigator.of(context).push(
-              //             MaterialPageRoute(builder: (context) => SessionList()));
-              //       },
-              //       child: const Text(
-              //         "جدول الجلسات",
-              //         style: TextStyle(
-              //             color: Color(0XFFFAFAFA),
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w600),
-              //       )),
-              // ),
-              //
-              // const SizedBox(
-              //   height: 30,
-              // ),
-              //
-              // /// Attendance
-              // Container(
-              //   height: 55,
-              //   padding: EdgeInsets.symmetric(horizontal: 20),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: ElevatedButton(
-              //       style: ButtonStyle(
-              //         padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
-              //         elevation: MaterialStateProperty.all<double>(0),
-              //         fixedSize:
-              //         MaterialStateProperty.all<Size>(Size(200, 45)),
-              //         shape: MaterialStateProperty.all(
-              //           RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(50),
-              //           ),
-              //         ),
-              //         backgroundColor:
-              //         MaterialStateProperty.all(AppConstance.mainColor),
-              //       ),
-              //       onPressed: () {
-              //         Navigator.of(context).push(
-              //             MaterialPageRoute(builder: (context) => Attendance()));
-              //       },
-              //       child: const Text(
-              //         "الغياب",
-              //         style: TextStyle(
-              //             color: Color(0XFFFAFAFA),
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w600),
-              //       )),
-              // ),
-              //
-              // const SizedBox(
-              //   height: 30,
-              // ),
-              //
-              //
-              // /// Marks
-              // Container(
-              //   height: 55,
-              //   padding: EdgeInsets.symmetric(horizontal: 20),
-              //   width: MediaQuery.of(context).size.width,
-              //   child: ElevatedButton(
-              //       style: ButtonStyle(
-              //         padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 13, horizontal: 10)),
-              //         elevation: MaterialStateProperty.all<double>(0),
-              //         fixedSize:
-              //         MaterialStateProperty.all<Size>(Size(200, 45)),
-              //         shape: MaterialStateProperty.all(
-              //           RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(50),
-              //           ),
-              //         ),
-              //         backgroundColor:
-              //         MaterialStateProperty.all(AppConstance.mainColor),
-              //       ),
-              //       onPressed: () {
-              //         Navigator.of(context).push(
-              //             MaterialPageRoute(builder: (context) => StudentMarks()));
-              //       },
-              //       child: const Text(
-              //         "الدرجات",
-              //         style: TextStyle(
-              //             color: Color(0XFFFAFAFA),
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w600),
-              //       )),
-              // ),
 
               const SizedBox(
                 height: 30,
               ),
 
-              /// Logout
+
+              /// Sessions
               Container(
                 height: 55,
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     style: ButtonStyle(
@@ -202,9 +96,132 @@ class _StudentHomepageState extends State<StudentHomepage> {
                           const EdgeInsets.symmetric(
                               vertical: 13, horizontal: 10)),
                       elevation: MaterialStateProperty.all<double>(0),
-                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
                       shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SessionList()));
+                    },
+                    child: const Text(
+                      "الجلسات",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+              /// Grades
+              Container(
+                height: 55,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const StudentMarks()));
+                    },
+                    child: const Text(
+                      "الدرجات",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+
+              const SizedBox(
+                height: 30,
+              ),
+
+              /// Attendance
+              Container(
+                height: 55,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Attendance()));
+                    },
+                    child: const Text(
+                      "الحضور والأنصراف",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+
+
+              /// Logout
+              Container(
+                height: 55,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                       const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50),
                             bottomRight: Radius.circular(50),
@@ -219,7 +236,7 @@ class _StudentHomepageState extends State<StudentHomepage> {
                           await SharedPreferences.getInstance();
                       prefs.clear();
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => LoginScreen()));
+                          builder: (context) => const LoginScreen()));
                     },
                     child: const Text(
                       " تسجيل الخروج",

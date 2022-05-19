@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
-import 'package:quraan/screens/student/student_homepage.dart';
 import 'package:quraan/screens/student_register_screen.dart';
-import 'package:quraan/screens/teacher/teacher_homepage.dart';
 import 'package:quraan/screens/teacher_register_screen.dart';
 
 class ChooseRole extends StatefulWidget {

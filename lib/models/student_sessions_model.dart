@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final sessionModel = sessionModelFromJson(jsonString);
+//     final studentSessionsModel = studentSessionsModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SessionModel sessionModelFromJson(String str) => SessionModel.fromJson(json.decode(str));
+StudentSessionsModel studentSessionsModelFromJson(String str) => StudentSessionsModel.fromJson(json.decode(str));
 
-String sessionModelToJson(SessionModel data) => json.encode(data.toJson());
+String studentSessionsModelToJson(StudentSessionsModel data) => json.encode(data.toJson());
 
-class SessionModel {
-  SessionModel({
+class StudentSessionsModel {
+  StudentSessionsModel({
     this.id,
     this.start,
     this.end,
@@ -30,12 +30,12 @@ class SessionModel {
   String? preSessionId;
   String? status;
   String? teacherId;
-  String? adminId;
+  dynamic adminId;
   String? numberOfStudents;
   String? link;
   Teacher? teacher;
 
-  factory SessionModel.fromJson(Map<String, dynamic> json) => SessionModel(
+  factory StudentSessionsModel.fromJson(Map<String, dynamic> json) => StudentSessionsModel(
     id: json["id"] == null ? null : json["id"],
     start: json["start"] == null ? null : DateTime.parse(json["start"]),
     end: json["end"] == null ? null : DateTime.parse(json["end"]),
@@ -43,7 +43,7 @@ class SessionModel {
     preSessionId: json["pre_session_id"],
     status: json["status"] == null ? null : json["status"],
     teacherId: json["teacher_id"] == null ? null : json["teacher_id"],
-    adminId: json["admin_id"] == null ? null : json["admin_id"],
+    adminId: json["admin_id"],
     numberOfStudents: json["number_of_students"] == null ? null : json["number_of_students"],
     link: json["link"] == null ? null : json["link"],
     teacher: json["teacher"] == null ? null : Teacher.fromJson(json["teacher"]),
@@ -57,7 +57,7 @@ class SessionModel {
     "pre_session_id": preSessionId,
     "status": status == null ? null : status,
     "teacher_id": teacherId == null ? null : teacherId,
-    "admin_id": adminId == null ? null : adminId,
+    "admin_id": adminId,
     "number_of_students": numberOfStudents == null ? null : numberOfStudents,
     "link": link == null ? null : link,
     "teacher": teacher == null ? null : teacher!.toJson(),

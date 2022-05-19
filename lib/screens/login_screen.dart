@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:quraan/screens/student/student_homepage.dart';
 import 'package:quraan/sharedText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:dio/dio.dart';
-import 'package:http/http.dart' as http;
 import 'package:quraan/models/user_model.dart';
 import 'package:quraan/screens/admin/admin_homepage.dart';
 import 'package:quraan/screens/choose_role.dart';
@@ -79,7 +77,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
         prefs.setString("userModel", userMod);
         prefs.setString("tokenAccess", userToken);
-        print("fmkfmkm ${userToken}");
         prefs.setString("password", passwordController.text);
         SharedText.password = prefs.getString("password")!;
         showTopSnackBar(
@@ -121,15 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: AppConstance.mainColor,
-      //   elevation: 0,
-      //   title: Text(
-      //     "تسجيل الدخول",
-      //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-      //   ),
-      //   centerTitle: true,
-      // ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         alignment: Alignment.center,

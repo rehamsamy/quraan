@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
-import 'package:quraan/models/student_model.dart';
 import 'package:quraan/models/teacher_model.dart';
 import 'package:quraan/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -30,6 +30,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
   TextEditingController end = TextEditingController();
   TextEditingController numberOfStudent = TextEditingController();
   TextEditingController zoomLink = TextEditingController();
+  TextEditingController preSessionId = TextEditingController();
   int? teacherID;
   bool active = false;
   bool notActive = false;
@@ -117,6 +118,16 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
       return;
     }
 
+    if (preSessionId.text.isEmpty) {
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "أدخل رابط الحلقة السابقة",
+        ),
+      );
+      return;
+    }
+
     if (teacherModel == null) {
       showTopSnackBar(
         context,
@@ -145,6 +156,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
         "teacher_id": teacherModel!.id,
         "number_of_students": numberOfStudent.text,
         "link": zoomLink.text,
+        "pre_session_id" : preSessionId.text,
         "status": active ? 1 : 0,
       });
 
@@ -155,6 +167,7 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                 'Bearer ${json.decode(prefs.getString("tokenAccess")!)}',
           }));
 
+      print(response.data.toString() + "text");
 
       if (response.statusCode == 200) {
         showTopSnackBar(
@@ -474,6 +487,62 @@ class _AddSessionScreenState extends State<AddSessionScreen> {
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                         hintText: "رابط الجلسة",
+                        hintStyle: TextStyle(
+                            color: Colors.grey.withOpacity(0.34),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onFieldSubmitted: (value) {
+                        //Validator
+                      },
+                      // validator: widget.validationFunction,
+                    ),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    /// previous session link
+                    Row(
+                      children: [
+                        Text(
+                          "رابط الحلقة السابقة",
+                          style: TextStyle(
+                              color: AppConstance.mainColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: preSessionId,
+                      keyboardType: TextInputType.text,
+                      cursorColor: AppConstance.mainColor,
+                      decoration: InputDecoration(
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        hintText: "رابط الحلقة السابقة",
                         hintStyle: TextStyle(
                             color: Colors.grey.withOpacity(0.34),
                             fontWeight: FontWeight.w600,

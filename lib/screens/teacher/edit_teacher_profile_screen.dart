@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/models/single_user_data_model.dart';
-import 'package:quraan/models/user_model.dart';
 import 'package:quraan/sharedText.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';

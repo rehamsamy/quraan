@@ -1,12 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quraan/constants.dart';
-import 'package:quraan/models/user_model.dart';
 import 'package:quraan/screens/admin/admin_homepage.dart';
-import 'package:quraan/screens/admin/admin_profile.dart';
-import 'package:quraan/screens/choose_role.dart';
 import 'package:quraan/screens/login_screen.dart';
 import 'package:quraan/screens/student/student_homepage.dart';
 import 'package:quraan/screens/teacher/teacher_homepage.dart';

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
-import 'package:quraan/screens/admin/admin_profile.dart';
 import 'package:quraan/screens/login_screen.dart';
-import 'package:quraan/screens/teacher/add_mark.dart';
-import 'package:quraan/screens/teacher/add_session.dart';
 import 'package:quraan/screens/teacher/degrees/teacher_all_degrees.dart';
-import 'package:quraan/screens/teacher/enter_attendance.dart';
-import 'package:quraan/screens/teacher/student_info.dart';
 import 'package:quraan/screens/teacher/teacher_all_sessions.dart';
 import 'package:quraan/screens/teacher/attendance/teacher_attendance.dart';
 import 'package:quraan/screens/teacher/teacher_profile.dart';
@@ -43,8 +38,50 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
              const SizedBox(
                 height: 40,
+              ),
+
+
+              /// my students
+              Container(
+                height: 55,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TeacherProfile()));
+                    },
+                    child: const Text(
+                      "طلابي",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+              const SizedBox(
+                height: 30,
               ),
 
               /// Profile

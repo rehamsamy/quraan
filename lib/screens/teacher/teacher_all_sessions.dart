@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:quraan/screens/admin/sessions/add_session.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -89,6 +90,23 @@ class _TeacherAllSessionsState extends State<TeacherAllSessions> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddSessionScreen(),
+                                    ));
+                              },
+                              child: Text(
+                                "إضافة جلسة جديدة",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                        ],
+                      ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -243,6 +261,46 @@ class _TeacherAllSessionsState extends State<TeacherAllSessions> {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ))
+                                    ],
+                                  ),
+
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+
+                                  /// previous Link
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "رابط الحلقة السابقة :",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: AppConstance.mainColor),
+                                      ),
+                                      Expanded(
+                                          child: GestureDetector(
+                                            onTap: () async {
+                                             if(sessionList[index].preSessionId != null){
+                                               var url = sessionList[index]
+                                                   .preSessionId
+                                                   .toString();
+                                               if (await canLaunch(url)) {
+                                                 await launch(url,
+                                                     forceSafariVC: false);
+                                               } else {
+                                                 throw 'Could not launch $url';
+                                               }
+                                             }
+                                            },
+                                            child: Text(
+                                              sessionList[index].preSessionId ?? "",
+                                              softWrap: true,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ))
                                     ],
                                   ),
 

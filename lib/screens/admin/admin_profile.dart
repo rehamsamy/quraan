@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/models/user_model.dart';
