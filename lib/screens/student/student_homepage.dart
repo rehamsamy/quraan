@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/screens/login_screen.dart';
+import 'package:quraan/screens/student/my_teatchers.dart';
 import 'package:quraan/screens/student/session_list.dart';
 import 'package:quraan/screens/student/student_attendance.dart';
 import 'package:quraan/screens/student/student_marks.dart';
@@ -42,6 +43,45 @@ class _StudentHomepageState extends State<StudentHomepage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+              Container(
+                height: 55,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 13, horizontal: 10)),
+                      elevation: MaterialStateProperty.all<double>(0),
+                      fixedSize: MaterialStateProperty.all<Size>(const Size(200, 45)),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            bottomRight: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                      backgroundColor:
+                      MaterialStateProperty.all(AppConstance.mainColor),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const MyTeachersScreen()));
+                    },
+                    child: const Text(
+                      "المعلمين المسند لهم",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    )),
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
 
 
               /// Profile

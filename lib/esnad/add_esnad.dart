@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:quraan/esnad/all_esnadat.dart';
 import 'package:quraan/models/student_model.dart';
 import 'package:quraan/models/teacher_model.dart';
 import 'package:quraan/screens/student/student_homepage.dart';
@@ -148,12 +149,12 @@ class _AddEsnadScreenState extends State<AddEsnadScreen> {
         showTopSnackBar(
           context,
           CustomSnackBar.success(
-            message: "تم التسجيل بنجاح",
+            message: "تم الاسناد بنجاح",
           ),
         );
 
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>  AllEsnadatScreen()));
       }
 
       setState(() {
@@ -169,7 +170,7 @@ class _AddEsnadScreenState extends State<AddEsnadScreen> {
       showTopSnackBar(
         context,
         CustomSnackBar.error(
-            message: exception.response!.data['errors']['end']),
+            message: exception.response!.data['errors'][0]),
       );
     }
   }
@@ -416,7 +417,7 @@ class _AddEsnadScreenState extends State<AddEsnadScreen> {
                     addSession();
                   },
                   child: const Text(
-                    "إضافة الجلسة",
+                    "إضافة الإسناد",
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,

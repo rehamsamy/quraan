@@ -250,7 +250,7 @@ class _AllEsnadatScreenState extends State<AllEsnadatScreen> {
                                   //     ));
                                 },
                                 child: Text(
-                                  "التفاصيل",
+                                  "     ",
                                   style: TextStyle(
                                       color: AppConstance.mainColor),
                                 )),

@@ -21,8 +21,15 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController sallaryController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  TextEditingController partsController = TextEditingController();
   bool isMale = false;
   bool isFemale = false;
+  bool parts1to5=false;
+  bool parts5to10=false;
+  bool parts10to15=false;
+  bool parts15to20=false;
+  bool parts20to25=false;
+  bool parts25to30=false;
 
   _register() async {
     if (nameController.text.isEmpty) {
@@ -107,6 +114,18 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
       return;
     }
 
+    if (parts1to5==false&&parts5to10==false&&parts10to15==false&& parts15to20==false
+    && parts20to25 ==false && parts25to30==false &&parts25to30){
+      showTopSnackBar(
+        context,
+        CustomSnackBar.error(
+          message: "أدخل عدد الاجزاء ",
+        ),
+      );
+      return;
+    }
+
+
     if (isMale == false && isFemale == false) {
       showTopSnackBar(
         context,
@@ -127,6 +146,12 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
         "address": addressController.text,
         "gender": isMale ? "male" : "female",
         "age": ageController.text,
+        "number_of_parts":parts1to5?"1-5(المعلمه عبير)":
+                          parts5to10?"5-10(المعلمه فاطمه)":
+                          parts10to15?"10-15(المعلمه مريم)":
+                          parts15to20?"15-20(المعلمه هدي )":
+                          parts20to25?"20-25(المعلمه نوف)":
+                          parts25to30?"25-30(المعلمه نور)":null
       });
 
       var response = await Dio()
@@ -583,11 +608,73 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 // validator: widget.validationFunction,
               ),
 
+              //number of parts
               const SizedBox(
                 height: 30,
               ),
 
               Row(
+                children: [
+                  Text(
+                    "عدد الاجزاء",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+///////////////////////   parts
+              Column(
+
+                                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildPartsNumber('من 1 الي 5(المعلمة عبير)',parts1to5,1),
+                      buildPartsNumber('من 5 الي 10(المعلمة فاطمة)',parts5to10,2),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      buildPartsNumber('من 10 الي 15(المعلمة مريم)',parts10to15,3),
+                      buildPartsNumber('من 15 الي 20(المعلمة هدي)',parts15to20,4),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      buildPartsNumber('من 20 الي 25(المعلمة نوف)',parts20to25,5),
+                      buildPartsNumber('من 25 الي 30(المعلمة نور)',parts25to30,6),
+                    ],
+                  )
+                ],
+              ),
+
+              const SizedBox(
+                height: 10,
+              ),
+
+              Row(
+                children: [
+                  Text(
+                    "الجنس",
+                    style: TextStyle(
+                        color: AppConstance.mainColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14),
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
                     child: Row(
@@ -612,6 +699,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       ],
                     ),
                   ),
+
                   Expanded(
                     child: Row(
                       children: [
@@ -671,5 +759,86 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
         ),
       ),
     );
+  }
+
+  buildPartsNumber(String title,bool valueChange,int flag) {
+    return Expanded(
+      child: Row(
+        children: [
+          Text(
+          title,
+            style: TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.w600,
+                fontSize: 14),
+          ),
+          Checkbox(
+            activeColor: AppConstance.mainColor,
+            value: valueChange,
+            onChanged: (bool? value) {
+              setState(() {
+                if(flag==1){print('yes');
+                  parts1to5=true;
+                  parts5to10= false;
+                  parts10to15=false;
+                  parts15to20=false;
+                  parts20to25=false;
+                  parts25to30=false;
+                }
+
+              else  if(flag==2){
+                  parts1to5=false;
+                  parts5to10= true;
+                  parts10to15=false;
+                  parts15to20=false;
+                  parts20to25=false;
+                  parts25to30=false;
+                }
+
+               else if(flag==3){
+                  parts1to5=false;
+                  parts5to10= false;
+                  parts10to15=true;
+                  parts15to20=false;
+                  parts20to25=false;
+                  parts25to30=false;
+                }
+
+               else if(flag==4){
+                  parts1to5=false;
+                  parts5to10= false;
+                  parts10to15=false;
+                  parts15to20=true;
+                  parts20to25=false;
+                  parts25to30=false;
+                }
+
+              else  if(flag==5){
+                  parts1to5=false;
+                  parts5to10= false;
+                  parts10to15=false;
+                  parts15to20=false;
+                  parts20to25=true;
+                  parts25to30=false;
+                }
+
+               else if(flag==6){
+                  parts1to5=false;
+                  parts5to10= false;
+                  parts10to15=false;
+                  parts15to20=false;
+                  parts20to25=false;
+                  parts25to30=true;
+                }
+
+
+
+              });
+            },
+          ),
+        ],
+      ),
+    );
+
   }
 }

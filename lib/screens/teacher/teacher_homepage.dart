@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quraan/constants.dart';
 import 'package:quraan/screens/login_screen.dart';
 import 'package:quraan/screens/teacher/degrees/teacher_all_degrees.dart';
+import 'package:quraan/screens/teacher/my_students.dart';
 import 'package:quraan/screens/teacher/teacher_all_sessions.dart';
 import 'package:quraan/screens/teacher/attendance/teacher_attendance.dart';
 import 'package:quraan/screens/teacher/teacher_profile.dart';
@@ -68,8 +69,9 @@ class _TeacherHomepageState extends State<TeacherHomepage> {
                       MaterialStateProperty.all(AppConstance.mainColor),
                     ),
                     onPressed: () {
+                      print('ccccccccccc');
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TeacherProfile()));
+                          builder: (context) => MyStudentsScreen()));
                     },
                     child: const Text(
                       "طلابي",
