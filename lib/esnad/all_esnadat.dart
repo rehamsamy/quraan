@@ -102,9 +102,31 @@ class _AllEsnadatScreenState extends State<AllEsnadatScreen> {
         ),
       )
           : esnadList.length == 0
-          ? Center(
+          ? Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEsnadScreen(),
+                            ));
+                      },
+                      child: Text(
+                        "إضافة إسناد جديد",
+                        style: TextStyle(color: Colors.white),
+                      )),
+                ],
+              ),
+              SizedBox(height: 50,),
+              Center(
         child: Text("لا يوجد بيانات"),
-      )
+      ),
+            ],
+          )
           : SingleChildScrollView(
         child: Column(
           children: [

@@ -108,9 +108,32 @@ class _AllSessionsState extends State<AllSessions> {
               ),
             )
           : sessionList.length == 0
-              ? Center(
-                  child: Text("لا يوجد بيانات"),
-                )
+              ? Column(
+                children: [
+                  Center(
+                      child: Text("لا يوجد بيانات"),
+                    ),
+
+                  SizedBox(height: 60,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddSessionScreen(),
+                                ));
+                          },
+                          child: Text(
+                            "إضافة جلسة جديدة",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ],
+                  ),
+                ],
+              )
               : SingleChildScrollView(
                   child: Column(
                     children: [
