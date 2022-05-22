@@ -631,31 +631,43 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
 ///////////////////////   parts
               Column(
 
-                                children: [
+
+                                 children: [
+                  // buildPartsNumber('من 1 الي 5(المعلمة عبير)',parts1to5,1),
+          //         buildPartsNumber('من 5 الي 10(المعلمة فاطمة)',parts5to10,2),
+          // buildPartsNumber('من 10 الي 15(المعلمة مريم)',parts10to15,3),
+          //    buildPartsNumber('من 15 الي 20(المعلمة هدي)',parts15to20,4),
+          // buildPartsNumber('من 20 الي 25(المعلمة نوف)',parts20to25,5),
+          //     buildPartsNumber('من 25 الي 30(المعلمة نور)',parts25to30,6),
+
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       buildPartsNumber('من 1 الي 5(المعلمة عبير)',parts1to5,1),
+
                       buildPartsNumber('من 5 الي 10(المعلمة فاطمة)',parts5to10,2),
                     ],
                   ),
+                                   SizedBox(height: 10,),
                   Row(
                     children: [
                       buildPartsNumber('من 10 الي 15(المعلمة مريم)',parts10to15,3),
+
                       buildPartsNumber('من 15 الي 20(المعلمة هدي)',parts15to20,4),
                     ],
                   ),
+                                   SizedBox(height: 10,),
                   Row(
                     children: [
                       buildPartsNumber('من 20 الي 25(المعلمة نوف)',parts20to25,5),
                       buildPartsNumber('من 25 الي 30(المعلمة نور)',parts25to30,6),
-                    ],
+                     ],
                   )
                 ],
               ),
 
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
 
               Row(
@@ -765,12 +777,15 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
     return Expanded(
       child: Row(
         children: [
-          Text(
-          title,
-            style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.w600,
-                fontSize: 14),
+          Expanded(
+            child: Text(
+            title,
+              style: TextStyle(
+                // overflow: TextOverflow.ellipsis,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14),
+            ),
           ),
           Checkbox(
             activeColor: AppConstance.mainColor,

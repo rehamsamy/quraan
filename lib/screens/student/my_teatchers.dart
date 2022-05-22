@@ -195,27 +195,27 @@ class _MyTeachersState extends State<MyTeachersScreen> {
                           height: 5,
                         ),
 
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "المرتب : ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color: AppConstance.mainColor),
-                            ),
-                            Expanded(
-                                child: Text(
-                                  myTeachersList[index]
-                                      .salary??0
-                                      .toString(),
-                                  softWrap: true,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       "المرتب : ",
+                        //       style: TextStyle(
+                        //           fontWeight: FontWeight.w500,
+                        //           fontSize: 16,
+                        //           color: AppConstance.mainColor),
+                        //     ),
+                        //     Expanded(
+                        //         child: Text(
+                        //           myTeachersList[index]
+                        //               .salary??0
+                        //               .toString(),
+                        //           softWrap: true,
+                        //           maxLines: 1,
+                        //           overflow: TextOverflow.ellipsis,
+                        //         ))
+                        //   ],
+                        // ),
 
                         /// End
                         Row(
@@ -244,64 +244,64 @@ class _MyTeachersState extends State<MyTeachersScreen> {
 
                         /// Number Of Student
 
-                        SizedBox(
-                          height: 5,
-                        ),
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
 
 
-                        /// Teacher name
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "رقم الهاتف : ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color: AppConstance.mainColor),
-                            ),
-                            Expanded(
-                                child: Text(
-                                  myTeachersList[index]
-                                      .phone!
-                                      .toString(),
-                                  softWrap: true,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: 5,
-                        ),
-
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "العنوان : ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color: AppConstance.mainColor),
-                            ),
-                            Expanded(
-                                child: Text(
-                                  myTeachersList[index]
-                                      .address??''
-                                      .toString(),
-                                  softWrap: true,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
-                          ],
-                        ),
+                        // /// Teacher name
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       "رقم الهاتف : ",
+                        //       style: TextStyle(
+                        //           fontWeight: FontWeight.w500,
+                        //           fontSize: 16,
+                        //           color: AppConstance.mainColor),
+                        //     ),
+                        //     Expanded(
+                        //         child: Text(
+                        //           myTeachersList[index]
+                        //               .phone!
+                        //               .toString(),
+                        //           softWrap: true,
+                        //           maxLines: 1,
+                        //           overflow: TextOverflow.ellipsis,
+                        //         ))
+                        //   ],
+                        // ),
 
                         SizedBox(
                           height: 5,
                         ),
+
+
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     Text(
+                        //       "العنوان : ",
+                        //       style: TextStyle(
+                        //           fontWeight: FontWeight.w500,
+                        //           fontSize: 16,
+                        //           color: AppConstance.mainColor),
+                        //     ),
+                        //     Expanded(
+                        //         child: Text(
+                        //           myTeachersList[index]
+                        //               .address??''
+                        //               .toString(),
+                        //           softWrap: true,
+                        //           maxLines: 1,
+                        //           overflow: TextOverflow.ellipsis,
+                        //         ))
+                        //   ],
+                        // ),
+                        //
+                        // SizedBox(
+                        //   height: 5,
+                        // ),
 
 
 

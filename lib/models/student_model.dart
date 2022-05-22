@@ -17,6 +17,7 @@ class StudentModel {
     this.email,
     this.phone,
     this.address,
+    this.number_of_parts
   });
 
   int? id;
@@ -26,6 +27,7 @@ class StudentModel {
   String? email;
   String? phone;
   String? address;
+  String ? number_of_parts;
 
   factory StudentModel.fromJson(Map<String, dynamic> json) => StudentModel(
     id: json["id"] == null ? null : json["id"],
@@ -35,6 +37,7 @@ class StudentModel {
     email: json["email"] == null ? null : json["email"],
     phone: json["phone"] == null ? null : json["phone"],
     address: json["address"] == null ? null : json["address"],
+    number_of_parts: json["number_of_parts"] == null ? null : json["number_of_parts"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,5 +48,6 @@ class StudentModel {
     "email": email == null ? null : email,
     "phone": phone == null ? null : phone,
     "address": address == null ? null : address,
+    "number_of_parts": number_of_parts == null ? null : number_of_parts,
   };
 }

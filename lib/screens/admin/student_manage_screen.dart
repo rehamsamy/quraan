@@ -245,6 +245,34 @@ class _StudentManagementState extends State<StudentManagement> {
                               ],
                             ),
 
+
+                            SizedBox(
+                              height: 5,
+                            ),
+
+                            /// Age
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "عدد الاجزاء : ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: AppConstance.mainColor),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                      studentList[index].number_of_parts.toString(),
+                                      softWrap: true,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ))
+                              ],
+                            ),
+
+
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
