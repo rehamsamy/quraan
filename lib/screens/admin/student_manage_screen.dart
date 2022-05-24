@@ -39,6 +39,8 @@ class _StudentManagementState extends State<StudentManagement> {
               .map((e) => StudentModel.fromJson(e))
               .toList();
           isLoading = false;
+
+          print('xxxxxxx   '+ studentList[0].number_of_parts.toString());
         });
       }
     } on DioError catch (exception) {
